@@ -4,6 +4,8 @@ import sys
 from loguru import logger
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.common.by import By
+from selenium.common.exceptions import *
+from selenium.webdriver.support import expected_conditions as EC
 
 
 
@@ -45,7 +47,8 @@ class DriverCustom:
         try:
             element = wait.until(lambda driver: self.driver.find_element(by_type, locator))
             logger.info(f'Element found with locator: {locator} and locatorType: {locator_type}')
-        except:
+        except NoSuchElementException as e:
+            print(e)
             logger.error(f"Element not found with locator: {locator} and locatorType: {locator_type}")
             # self.screen_shot(f'{locator}')
         return element
@@ -75,3 +78,20 @@ class DriverCustom:
         except:
             logger.info(f"Cannot send data to element with locator: {locator} and locatorType: {locator_type}")
 
+
+    def wait_for_element(self, locator, locator_type="id",
+                         timeout=10, poll_frequency=0.5):
+        element = None
+        by_type = self.get_by_type(locator_type)
+        try:
+            logger.info(f"Waiting for maximum: {timeout} seconds for element to be clickable")
+            wait = WebDriverWait(self.driver, 10, poll_frequency=poll_frequency,
+                                 ignored_exceptions=[NoSuchElementException,
+                                                     ElementNotVisibleException,
+                                                     ElementNotSelectableException])
+            element = wait.until(EC.element_to_be_clickable((by_type,
+                                                             locator)))
+            logger.info(f"Element {locator} appeared on the web page. locatorType {locator_type}")
+        except:
+            logger.info(f"Element {locator} not appeared on the web page. LocatorType {locator_type}")
+        return element
