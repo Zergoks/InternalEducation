@@ -1,6 +1,8 @@
 # TODO 1: Добавить скиншоты при фейлах
 
+import os
 import sys
+import time
 from loguru import logger
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.common.by import By
@@ -14,6 +16,21 @@ class DriverCustom:
     def __init__(self, driver):
         self.driver = driver
         self.base_url = 'https://demoqa.com/'
+
+    def screen_shot(self, result_message):
+        file_name = result_message + "." + str(round(time.time() * 1000)) + ".png"
+        screenshot_directory = "../Screenshots/"
+        relative_file_name = screenshot_directory + file_name
+        current_directory = os.path.dirname(__file__)
+        destination_file = os.path.join(current_directory, relative_file_name)
+        destination_directory = os.path.join(current_directory, screenshot_directory)
+        try:
+            if not os.path.exists(destination_directory):
+                os.makedirs(destination_directory)
+            self.driver.save_screenshot(destination_file)
+            logger.info("Screenshot save to directory: " + destination_file)
+        except:
+            logger.error("### Exception Occurred when taking screenshot")
 
     def go_to_page(self):
         logger.info(f"go to {self.base_url}")
