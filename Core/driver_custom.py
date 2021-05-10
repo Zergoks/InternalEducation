@@ -13,6 +13,11 @@ class DriverCustom:
 
     def __init__(self, driver):
         self.driver = driver
+        self.base_url = 'https://demoqa.com/'
+
+    def go_to_page(self):
+        logger.info(f"go to {self.base_url}")
+        self.driver.get(self.base_url)
 
     def get_by_type(self, locator_type) -> By:
         locator_type = locator_type.lower()
@@ -105,3 +110,4 @@ class DriverCustom:
             logger.info("Can't be scrolled to element with locator: " + locator +
                           " locatorType: " + locator_type)
             # print_stack()
+

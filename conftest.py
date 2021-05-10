@@ -84,6 +84,7 @@ def create_log_file():
     then the existing file is renamed by appending the date to its basename to prevent file overwriting.
     This parameter accepts:
     Examples: "100 MB", "0.5 GB", "1 month 2 weeks", "4 days", "10h",
-    "monthly", "18:00", "sunday", "w0", "monday at 12:00\""""
+    "monthly", "18:00", "sunday", "w0", "monday at 12:00
+    can be compression='zip' """
 
-    logger.add(Path.cwd() / 'logs' / "start_in_{time}.log", compression='zip')
+    logger.add(Path.cwd() / 'logs' / "start_in_{time}.log", )
