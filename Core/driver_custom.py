@@ -11,7 +11,7 @@ from selenium.webdriver.support import expected_conditions as EC
 
 
 class DriverCustom:
-    logger.add(sys.stderr, format="{time} {level} {message}", level='DEBUG')
+    logger.add(sys.stderr, format="{time}.{level}:{message}", level='ERROR')
 
     def __init__(self, driver):
         self.driver = driver
@@ -69,8 +69,7 @@ class DriverCustom:
             element = wait.until(lambda driver: self.driver.find_element(by_type, locator))
             logger.info(f'Element found with locator: {locator} and locatorType: {locator_type}')
         except TimeoutException as e:
-            print(e)
-            logger.error(f"Element not found with locator: {locator} and locatorType: {locator_type}")
+            logger.exception(f"Element not found with locator: {locator} and locatorType: {locator_type}")
             # self.screen_shot(f'{locator}')
         return element
 
@@ -83,7 +82,7 @@ class DriverCustom:
             element = wait.until(lambda driver: self.driver.find_elements(by_type, locator))
             logger.info(f'Elements found with locator: {locator} and locatorType: {locator_type}')
         except TimeoutException:
-            logger.error(f"Elements not found with locator: {locator} and locatorType: {locator_type}")
+            logger.exception(f"Elements not found with locator: {locator} and locatorType: {locator_type}")
             # self.screen_shot(f'{locator}')
         return element
 
@@ -124,7 +123,7 @@ class DriverCustom:
             logger.info("Scrolled to element with locator: " + locator +
                           " locatorType: " + locator_type)
         except:
-            logger.info("Can't be scrolled to element with locator: " + locator +
+            logger.exception("Can't be scrolled to element with locator: " + locator +
                           " locatorType: " + locator_type)
             # print_stack()
 

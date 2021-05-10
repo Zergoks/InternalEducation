@@ -1,3 +1,4 @@
+import sys
 import pytest
 from selenium import webdriver
 from selenium.webdriver import ChromeOptions
@@ -5,6 +6,7 @@ from selenium.webdriver import FirefoxOptions
 from webdriver_manager.chrome import ChromeDriverManager
 from webdriver_manager.firefox import GeckoDriverManager
 from loguru import logger
+import logging
 from pathlib import Path
 
 
@@ -86,5 +88,8 @@ def create_log_file():
     Examples: "100 MB", "0.5 GB", "1 month 2 weeks", "4 days", "10h",
     "monthly", "18:00", "sunday", "w0", "monday at 12:00
     can be compression='zip' """
-
-    logger.add(Path.cwd() / 'logs' / "start_in_{time}.log", )
+    info_handler = logger.add(Path.cwd() / 'logs' / "start_in_{time}_info.log",
+                              level=logging.INFO,
+                              format="{level}: {message}")
+    error_handler = logger.add(Path.cwd() / 'logs' / "start_in_{time}_error.log",
+                               level=logging.ERROR)
