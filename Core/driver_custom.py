@@ -8,6 +8,8 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.common.by import By
 from selenium.common.exceptions import *
 from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.remote.webdriver import WebElement
+from typing import Union
 
 
 class DriverCustom:
@@ -15,7 +17,7 @@ class DriverCustom:
 
     def __init__(self, driver):
         self.driver = driver
-        self.base_url = 'https://demoqa.com/'
+        self.base_url = 'http://uitestingplayground.com'
 
     def screen_shot(self, result_message):
         file_name = result_message + "." + str(round(time.time() * 1000)) + ".png"
@@ -60,7 +62,7 @@ class DriverCustom:
             logger.error(f"Locator type: {locator_type} not correct/supported")
             raise NotImplementedError
 
-    def get_element(self, locator: str, locator_type: str ="css"):
+    def get_element(self, locator: str, locator_type: str = "css") -> WebElement:
         element = None
         locator_type = locator_type.lower()
         by_type = self.get_by_type(locator_type)
@@ -73,24 +75,24 @@ class DriverCustom:
             # self.screen_shot(f'{locator}')
         return element
 
-    def get_elements(self, locator, locator_type="css"):
-        element = None
+    def get_elements(self, locator: str, locator_type: str = "css") -> list[WebElement]:
+        elements = None
         locator_type = locator_type.lower()
         by_type = self.get_by_type(locator_type)
         wait = WebDriverWait(self.driver, 10)
         try:
-            element = wait.until(lambda driver: self.driver.find_elements(by_type, locator))
+            elements = wait.until(lambda driver: self.driver.find_elements(by_type, locator))
             logger.info(f'Elements found with locator: {locator} and locatorType: {locator_type}')
         except TimeoutException:
             logger.exception(f"Elements not found with locator: {locator} and locatorType: {locator_type}")
             # self.screen_shot(f'{locator}')
-        return element
+        return elements
 
-    def clear_the_element(self, locator, locator_type="css"):
+    def clear_the_element(self, locator: str, locator_type: str = "css"):
         element = self.get_element(locator, locator_type)
         element.clear()
 
-    def send_keys_to(self, data, locator, locator_type="css"):
+    def send_keys_to(self, data: str, locator: str, locator_type: str = "css"):
         element = self.get_element(locator, locator_type)
         try:
             element.send_keys(data)
@@ -98,12 +100,15 @@ class DriverCustom:
         except TimeoutException:
             logger.info(f"Cannot send data to element with locator: {locator} and locatorType: {locator_type}")
 
-    def wait_for_element_to_be_clickable(self, locator, locator_type="id",
-                                         timeout=10, poll_frequency=0.5) -> bool:
+    def wait_for_element_to_be_clickable(self,
+                                         locator: str,
+                                         locator_type: str = "id",
+                                         timeout: Union[int, float] = 10,
+                                         poll_frequency: Union[int, float] = 0.5) -> bool:
         by_type = self.get_by_type(locator_type)
         try:
             logger.info(f"Waiting for maximum: {timeout} seconds for element to be clickable")
-            wait = WebDriverWait(self.driver, 10, poll_frequency=poll_frequency,
+            wait = WebDriverWait(self.driver, timeout, poll_frequency=poll_frequency,
                                  ignored_exceptions=[NoSuchElementException,
                                                      ElementNotVisibleException,
                                                      ElementNotSelectableException])
@@ -115,15 +120,14 @@ class DriverCustom:
             is_clickable = False
         return is_clickable
 
-    def scroll_into_view(self, locator, locator_type="css"):
+    def scroll_into_view(self, locator: str, locator_type: str = "css"):
         try:
             locator_type = locator_type.lower()
             element = self.get_element(locator, locator_type)
             self.driver.execute_script("arguments[0].scrollIntoView();", element)
             logger.info("Scrolled to element with locator: " + locator +
-                          " locatorType: " + locator_type)
+                        " locatorType: " + locator_type)
         except:
             logger.exception("Can't be scrolled to element with locator: " + locator +
-                          " locatorType: " + locator_type)
-            # print_stack()
-
+                             " locatorType: " + locator_type)
+            # from pdb import set_trace; set_trace()

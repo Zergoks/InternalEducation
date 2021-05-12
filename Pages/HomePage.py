@@ -7,4 +7,4 @@ class HomePage(DriverCustom):
     def __init__(self, driver):
         super().__init__(driver)
         self.url = '/home'
-        self.title = 'ToolsQA'
+        self.title = 'UI Test Automation Playground'
