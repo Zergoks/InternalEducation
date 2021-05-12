@@ -1,7 +1,6 @@
 # TODO 1: Добавить скиншоты при фейлах
 
 import os
-import sys
 import time
 from loguru import logger
 from selenium.webdriver.support.ui import WebDriverWait
@@ -13,13 +12,12 @@ from typing import Union
 
 
 class DriverCustom:
-    logger.add(sys.stderr, format="{time}.{level}:{message}", level='ERROR')
 
     def __init__(self, driver):
         self.driver = driver
         self.base_url = 'http://uitestingplayground.com'
 
-    def screen_shot(self, result_message):
+    def screen_shot(self, result_message: str):
         file_name = result_message + "." + str(round(time.time() * 1000)) + ".png"
         screenshot_directory = "../Screenshots/"
         relative_file_name = screenshot_directory + file_name
@@ -38,7 +36,7 @@ class DriverCustom:
         logger.info(f"go to {self.base_url}")
         self.driver.get(self.base_url)
 
-    def get_by_type(self, locator_type) -> By:
+    def get_by_type(self, locator_type: str) -> By:
         locator_type = locator_type.lower()
         if locator_type == "id":
             return By.ID
@@ -60,7 +58,7 @@ class DriverCustom:
             return By.LINK_TEXT
         else:
             logger.error(f"Locator type: {locator_type} not correct/supported")
-            raise NotImplementedError
+            raise NotImplementedError('Нет такого By')
 
     def get_element(self, locator: str, locator_type: str = "css") -> WebElement:
         element = None
@@ -125,9 +123,7 @@ class DriverCustom:
             locator_type = locator_type.lower()
             element = self.get_element(locator, locator_type)
             self.driver.execute_script("arguments[0].scrollIntoView();", element)
-            logger.info("Scrolled to element with locator: " + locator +
-                        " locatorType: " + locator_type)
+            logger.info(f"Scrolled to element with locator: {locator} and locatorType: {locator_type}")
         except:
-            logger.exception("Can't be scrolled to element with locator: " + locator +
-                             " locatorType: " + locator_type)
             # from pdb import set_trace; set_trace()
+            logger.exception(f"Can't be scrolled to element with locator: {locator} and locatorType: {locator_type}")
