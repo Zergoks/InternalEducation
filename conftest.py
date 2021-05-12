@@ -68,7 +68,7 @@ def create_local_driver(config):
 
 @pytest.fixture()
 def driver(request, config):
-    "Вариант проброса драйвера через request.addfinalizer и return"
+    """Вариант проброса драйвера через request.addfinalizer и return"""
     driver = None
     driver = create_local_driver(config)
     request.instance.driver = driver
@@ -84,7 +84,7 @@ def driver(request, config):
 
 # @pytest.fixture()
 # def driver(request, config):
-#     "Вариант проброса драйвера через yield"
+#     """Вариант проброса драйвера через yield"""
 #     driver = None
 #     driver = create_local_driver(config)
 #     request.instance.driver = driver
