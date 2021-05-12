@@ -1,3 +1,5 @@
+# TODO 1: добавить изменения уровня логирования из параметров --log_level
+
 import sys
 import pytest
 from selenium import webdriver
@@ -16,6 +18,7 @@ def pytest_addoption(parser):
     parser.addoption("--browser_ver", action="store", default="")
     parser.addoption("--headless", action="store", default=False)
     parser.addoption("--env", action="store", default="test")
+    parser.addoption("--log_level", action="store", default="INFO")
 
 
 @pytest.fixture()
@@ -65,6 +68,7 @@ def create_local_driver(config):
 
 @pytest.fixture()
 def driver(request, config):
+    "Вариант проброса драйвера через request.addfinalizer и return"
     driver = None
     driver = create_local_driver(config)
     request.instance.driver = driver
@@ -77,6 +81,18 @@ def driver(request, config):
 
     request.addfinalizer(tear_down)
     yield driver
+
+# @pytest.fixture()
+# def driver(request, config):
+#     "Вариант проброса драйвера через yield"
+#     driver = None
+#     driver = create_local_driver(config)
+#     request.instance.driver = driver
+#     driver.delete_all_cookies()
+#     driver.maximize_window()
+#     driver.implicitly_wait(3)
+#
+#     yield driver
 
 
 @pytest.fixture(scope='session', autouse=True)

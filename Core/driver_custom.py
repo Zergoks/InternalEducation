@@ -60,7 +60,7 @@ class DriverCustom:
             logger.error(f"Locator type: {locator_type} not correct/supported")
             raise NotImplementedError
 
-    def get_element(self, locator, locator_type="css"):
+    def get_element(self, locator: str, locator_type: str ="css"):
         element = None
         locator_type = locator_type.lower()
         by_type = self.get_by_type(locator_type)
