@@ -1,7 +1,6 @@
 # TODO 1: Добавить скиншоты при фейлах
 # TODO 2: Добавить allure
 
-import os
 import time
 from loguru import logger
 from selenium.webdriver.support.ui import WebDriverWait
@@ -22,8 +21,8 @@ class DriverCustom:
         file_name = str(round(time.time() * 1000)) + ".png"
         path_to_save = get_project_root() / "Screenshots"
         try:
-            if not os.path.exists(path_to_save):
-                os.makedirs(path_to_save)
+            if not path_to_save.is_dir():
+                path_to_save.mkdir()
             logger.debug(self.driver.save_screenshot(str(path_to_save/file_name)))
             logger.info(f"Screenshot save to directory: {str(path_to_save)}. Name: {file_name}")
         except TimeoutException:
