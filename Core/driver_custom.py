@@ -1,4 +1,5 @@
 # TODO 1: Добавить скиншоты при фейлах
+# TODO 2: Добавить allure
 
 import os
 import time
@@ -9,7 +10,7 @@ from selenium.common.exceptions import *
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.remote.webdriver import WebElement
 from typing import Union
-
+from Core.utils import get_project_root
 
 class DriverCustom:
 
@@ -18,19 +19,16 @@ class DriverCustom:
         self.base_url = 'http://uitestingplayground.com'
 
     def screen_shot(self, result_message: str):
-        file_name = result_message + "." + str(round(time.time() * 1000)) + ".png"
-        screenshot_directory = "../Screenshots/"
-        relative_file_name = screenshot_directory + file_name
-        current_directory = os.path.dirname(__file__)
-        destination_file = os.path.join(current_directory, relative_file_name)
-        destination_directory = os.path.join(current_directory, screenshot_directory)
+        file_name = str(round(time.time() * 1000)) + ".png"
+        path_to_save = get_project_root() / "Screenshots"
         try:
-            if not os.path.exists(destination_directory):
-                os.makedirs(destination_directory)
-            self.driver.save_screenshot(destination_file)
-            logger.info("Screenshot save to directory: " + destination_file)
-        except:
+            if not os.path.exists(path_to_save):
+                os.makedirs(path_to_save)
+            logger.debug(self.driver.save_screenshot(str(path_to_save/file_name)))
+            logger.info(f"Screenshot save to directory: {str(path_to_save)}. Name: {file_name}")
+        except TimeoutException:
             logger.error("### Exception Occurred when taking screenshot")
+
 
     def go_to_page(self):
         logger.info(f"go to {self.base_url}")
@@ -68,9 +66,10 @@ class DriverCustom:
         try:
             element = wait.until(lambda driver: self.driver.find_element(by_type, locator))
             logger.info(f'Element found with locator: {locator} and locatorType: {locator_type}')
+            self.screen_shot(f'{locator}')
         except TimeoutException as e:
             logger.exception(f"Element not found with locator: {locator} and locatorType: {locator_type}")
-            # self.screen_shot(f'{locator}')
+            self.screen_shot(f'{locator}')
         return element
 
     def get_elements(self, locator: str, locator_type: str = "css") -> list[WebElement]:
