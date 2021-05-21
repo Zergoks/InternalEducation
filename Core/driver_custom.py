@@ -1,5 +1,6 @@
 # TODO 1: Добавить скиншоты при фейлах
 # TODO 2: Добавить allure
+# TODO 3: wait_for_element_to_be_clickable может вынести фикстурой? или отельную фикстуру на ожидания
 
 import time
 from loguru import logger
@@ -17,6 +18,7 @@ class DriverCustom:
     def __init__(self, driver):
         self.driver = driver
         self.base_url = 'http://uitestingplayground.com'
+        self.url = '/'
 
     def screen_shot(self, result_message: str):
         file_name = str(round(time.time() * 1000)) + ".png"
@@ -30,9 +32,9 @@ class DriverCustom:
             logger.error("### Exception Occurred when taking screenshot")
             raise
 
-    def go_to_page(self, uri='/'):
+    def go_to_page(self):
         logger.info(f"go to {self.base_url}")
-        self.driver.get(self.base_url+uri)
+        self.driver.get(self.base_url+self.url)
 
     def get_by_type(self, locator_type: str) -> By:
         locator_type = locator_type.lower()
@@ -126,3 +128,9 @@ class DriverCustom:
         except:
             # from pdb import set_trace; set_trace()
             logger.exception(f"Can't be scrolled to element with locator: {locator} and locatorType: {locator_type}")
+
+    def click_on_element(self, locator, locator_type='css'):
+        element = self.get_element(locator, locator_type)
+        element.click()
+        logger.info(f"Clicked on element with locator: {locator} "
+                    f"and locatorType: {locator_type}")
