@@ -129,7 +129,7 @@ class DriverCustom:
             logger.exception(f"Can't be scrolled to element with locator: {locator} "
                              f"and locatorType: {locator_type}")
 
-    def click_on_element(self, locator, locator_type='css'):
+    def click_on_element(self, locator: str, locator_type: str = "css") -> None:
         locator_type = locator_type.lower()
         by_type = self.get_by_type(locator_type)
         element = self.driver.find_element(by_type, locator)
