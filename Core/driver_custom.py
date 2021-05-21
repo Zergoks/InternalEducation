@@ -130,7 +130,9 @@ class DriverCustom:
                              f"and locatorType: {locator_type}")
 
     def click_on_element(self, locator, locator_type='css'):
-        element = self.get_element(locator, locator_type)
+        locator_type = locator_type.lower()
+        by_type = self.get_by_type(locator_type)
+        element = self.driver.find_element(by_type, locator)
         element.click()
         logger.info(f"Clicked on element with locator: {locator} "
                     f"and locatorType: {locator_type}")
