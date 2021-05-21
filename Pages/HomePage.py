@@ -1,7 +1,25 @@
 import loguru
 
 from Core.driver_custom import DriverCustom
-from Core.ui_map import home_page
+
+
+class HomePageLocators:
+    DynamicIdLink = ('(//h3/a)[1]', 'xpath')
+    ClassAttributeLink = ('(//h3/a)[2]', 'xpath'),
+    HiddenLayersLink = ('(//h3/a)[3]', 'xpath'),
+    LoadDelayLink = ('(//h3/a)[4]', 'xpath'),
+    AJAXDataLink = ('(//h3/a)[5]', 'xpath'),
+    ClientSideDelayLink = ('(//h3/a)[6]', 'xpath'),
+    ClickLink = ('(//h3/a)[7]', 'xpath'),
+    TextInputLink = ('(//h3/a)[8]', 'xpath'),
+    ScrollbarsLink = ('(//h3/a)[9]', 'xpath'),
+    DynamicTableLink = ('(//h3/a)[10]', 'xpath'),
+    VerifyTextLink = ('(//h3/a)[11]', 'xpath'),
+    ProgressBarLink = ('(//h3/a)[12]', 'xpath'),
+    VisibilityLink = ('(//h3/a)[13]', 'xpath'),
+    SampleAppLink = ('(//h3/a)[14]', 'xpath'),
+    MouseOverLink = ('(//h3/a)[15]', 'xpath'),
+    NonBreakingSpaceLink = ('(//h3/a)[16]', 'xpath')
 
 
 class HomePage(DriverCustom):
@@ -12,6 +30,5 @@ class HomePage(DriverCustom):
         self.title = 'UI Test Automation Playground'
 
     def go_to_dynamic_id_page(self):
-        element_locator = (home_page['DynamicIdLinkByXpath'], 'xpath')
-        self.wait_for_element_to_be_clickable(*element_locator)
-        self.click_on_element(home_page['DynamicIdLinkByXpath'], 'xpath')
+        self.wait_for_element_to_be_clickable(*HomePageLocators.DynamicIdLink)
+        self.click_on_element(*HomePageLocators.DynamicIdLink)

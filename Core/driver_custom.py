@@ -31,7 +31,7 @@ class DriverCustom:
             logger.error("### Exception Occurred when taking screenshot")
             raise
 
-    def go_to_page(self):
+    def go_to_home_page(self):
         logger.info(f"go to {self.base_url}")
         self.driver.get(self.base_url+self.url)
 
