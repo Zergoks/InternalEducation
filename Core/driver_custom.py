@@ -26,7 +26,6 @@ class DriverCustom:
         try:
             if not path_to_save.is_dir():
                 path_to_save.mkdir()
-            logger.debug(self.driver.save_screenshot(str(path_to_save/file_name)))
             logger.info(f"Screenshot save to directory: {str(path_to_save)}. Name: {file_name}")
         except:
             logger.error("### Exception Occurred when taking screenshot")
@@ -68,7 +67,6 @@ class DriverCustom:
         try:
             element = wait.until(lambda driver: self.driver.find_element(by_type, locator))
             logger.info(f'Element found with locator: {locator} and locatorType: {locator_type}')
-            self.screen_shot(f'{locator}')
         except TimeoutException as e:
             logger.exception(f"Element not found with locator: {locator} and locatorType: {locator_type}")
             self.screen_shot(f'{locator}')
@@ -124,10 +122,12 @@ class DriverCustom:
             locator_type = locator_type.lower()
             element = self.get_element(locator, locator_type)
             self.driver.execute_script("arguments[0].scrollIntoView();", element)
-            logger.info(f"Scrolled to element with locator: {locator} and locatorType: {locator_type}")
+            logger.info(f"Scrolled to element with locator: {locator} "
+                        f"and locatorType: {locator_type}")
         except:
             # from pdb import set_trace; set_trace()
-            logger.exception(f"Can't be scrolled to element with locator: {locator} and locatorType: {locator_type}")
+            logger.exception(f"Can't be scrolled to element with locator: {locator} "
+                             f"and locatorType: {locator_type}")
 
     def click_on_element(self, locator, locator_type='css'):
         element = self.get_element(locator, locator_type)
