@@ -11,6 +11,7 @@ from selenium.webdriver.remote.webdriver import WebElement
 from typing import Union
 from Core.utils import get_project_root
 
+
 class DriverCustom:
 
     def __init__(self, driver):
@@ -19,19 +20,19 @@ class DriverCustom:
 
     def screen_shot(self, result_message: str):
         file_name = str(round(time.time() * 1000)) + ".png"
-        path_to_save = get_project_root() / "Screenshots"
+        path_to_save = get_project_root() / "Reports" / "Screenshots"
         try:
             if not path_to_save.is_dir():
                 path_to_save.mkdir()
             logger.debug(self.driver.save_screenshot(str(path_to_save/file_name)))
             logger.info(f"Screenshot save to directory: {str(path_to_save)}. Name: {file_name}")
-        except TimeoutException:
+        except:
             logger.error("### Exception Occurred when taking screenshot")
+            raise
 
-
-    def go_to_page(self):
+    def go_to_page(self, uri='/'):
         logger.info(f"go to {self.base_url}")
-        self.driver.get(self.base_url)
+        self.driver.get(self.base_url+uri)
 
     def get_by_type(self, locator_type: str) -> By:
         locator_type = locator_type.lower()

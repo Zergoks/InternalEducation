@@ -104,8 +104,9 @@ def create_log_file():
     Examples: "100 MB", "0.5 GB", "1 month 2 weeks", "4 days", "10h",
     "monthly", "18:00", "sunday", "w0", "monday at 12:00
     can be compression='zip' """
-    info_handler = logger.add(Path.cwd() / 'logs' / "start_in_{time}_debug.log",
+    path_to_logs = Path.cwd() / "Reports" / "Logs"
+    info_handler = logger.add(path_to_logs / "start_in_{time}_debug.log",
                               level=logging.DEBUG,
                               format="{level}: {message}")
-    error_handler = logger.add(Path.cwd() / 'logs' / "start_in_{time}_error.log",
+    error_handler = logger.add(path_to_logs / "start_in_{time}_error.log",
                                level=logging.ERROR)

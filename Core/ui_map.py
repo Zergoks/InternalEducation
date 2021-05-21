@@ -1,5 +1,5 @@
 home_page = dict(
-    DynamicIdLinkByCSS="#overview>.container>.row:nth-of-type(1)>.col-sm:nth-of-type(1)",
+    DynamicIdLinkByXpath="//h4/following-sibling::button",
     ClassAttributeLinkByCSS="#overview>.container>.row:nth-of-type(1)>.col-sm:nth-of-type(2)",
     HiddenLayersLinkByCSS="#overview>.container>.row:nth-of-type(1)>.col-sm:nth-of-type(3)",
     LoadDelayLinkByCSS="#overview>.container>.row:nth-of-type(1)>.col-sm:nth-of-type(4)",
