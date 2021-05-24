@@ -1,6 +1,7 @@
+import allure
 import loguru
 
-from Core.driver_custom import DriverCustom
+from Pages.BasePage import BasePage
 
 
 class HomePageLocators:
@@ -22,7 +23,7 @@ class HomePageLocators:
     NonBreakingSpaceLink = ('(//h3/a)[16]', 'xpath')
 
 
-class HomePage(DriverCustom):
+class HomePage(BasePage):
 
     def __init__(self, driver):
         super().__init__(driver)
@@ -31,4 +32,5 @@ class HomePage(DriverCustom):
 
     def go_to_dynamic_id_page(self):
         self.wait_for_element_to_be_clickable(*HomePageLocators.DynamicIdLink)
-        self.click_on_element(*HomePageLocators.DynamicIdLink)
+        with allure.step("Переходим на страницу dynamic id"):
+            self.click_on_element(*HomePageLocators.DynamicIdLink)

@@ -1,11 +1,11 @@
-from Core.driver_custom import DriverCustom
+from Pages.BasePage import BasePage
 
 
 class DynamicIdPageLocators:
     ButtonWithDynamicIdByXpath = "//h4/following-sibling::button"
 
 
-class DynamicIdPage(DriverCustom):
+class DynamicIdPage(BasePage):
 
     def __init__(self, driver):
         super().__init__(driver)

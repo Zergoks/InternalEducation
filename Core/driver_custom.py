@@ -9,31 +9,26 @@ from selenium.webdriver.common.by import By
 from selenium.common.exceptions import *
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.remote.webdriver import WebElement
-from typing import Union
+from typing import Union, List
 from Core.utils import get_project_root
+
+
+def screen_shot(result_message: str):
+    file_name = str(round(time.time() * 1000)) + ".png"
+    path_to_save = get_project_root() / "Reports" / "Screenshots"
+    try:
+        if not path_to_save.is_dir():
+            path_to_save.mkdir()
+        logger.info(f"Screenshot save to directory: {str(path_to_save)}. Name: {file_name}")
+    except:
+        logger.error("### Exception Occurred when taking screenshot")
+        raise
 
 
 class DriverCustom:
 
     def __init__(self, driver):
         self.driver = driver
-        self.base_url = 'http://uitestingplayground.com'
-        self.url = '/'
-
-    def screen_shot(self, result_message: str):
-        file_name = str(round(time.time() * 1000)) + ".png"
-        path_to_save = get_project_root() / "Reports" / "Screenshots"
-        try:
-            if not path_to_save.is_dir():
-                path_to_save.mkdir()
-            logger.info(f"Screenshot save to directory: {str(path_to_save)}. Name: {file_name}")
-        except:
-            logger.error("### Exception Occurred when taking screenshot")
-            raise
-
-    def go_to_home_page(self):
-        logger.info(f"go to {self.base_url}")
-        self.driver.get(self.base_url+self.url)
 
     def get_by_type(self, locator_type: str) -> By:
         locator_type = locator_type.lower()
@@ -69,10 +64,10 @@ class DriverCustom:
             logger.info(f'Element found with locator: {locator} and locatorType: {locator_type}')
         except TimeoutException as e:
             logger.exception(f"Element not found with locator: {locator} and locatorType: {locator_type}")
-            self.screen_shot(f'{locator}')
+            screen_shot(f'{locator}')
         return element
 
-    def get_elements(self, locator: str, locator_type: str = "css") -> list[WebElement]:
+    def get_elements(self, locator: str, locator_type: str = "css") -> List[WebElement]:
         elements = None
         locator_type = locator_type.lower()
         by_type = self.get_by_type(locator_type)
