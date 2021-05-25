@@ -3,7 +3,6 @@ import pytest
 from Pages.HomePage import HomePage
 
 
-@pytest.mark.test
 class TestMainPage:
     def test_home_page_title_is_correct(self, driver):
         home_page = HomePage(driver)
@@ -15,3 +14,10 @@ class TestMainPage:
             assert home_page.title in driver.title, f'Тайтл страницы отличается. ' \
                                                     f'EX: {home_page.title}, ' \
                                                     f'AR: {driver.title}'
+
+    def test_header_is_present(self, driver):
+        home_page = HomePage(driver)
+        home_page.go_to_home_page()
+        home_page.go_to_dynamic_id_page()
+        with allure.step("Проверяем, что header присутствует на странице"):
+            assert home_page.header.at_page() is True, f'Отсутствует header на странице'
