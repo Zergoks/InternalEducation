@@ -46,7 +46,7 @@ class BasePage(DriverCustom):
     def at_page(self) -> bool:
         return self.base_url + self.url == self.driver.current_url
 
-    @allure.step
+    @allure.step("Обновляем страницу")
     def refresh_page(self):
         logger.info(f"refresh page")
         self.driver.refresh()
