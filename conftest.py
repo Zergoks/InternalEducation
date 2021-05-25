@@ -1,6 +1,8 @@
 # TODO 1: добавить изменения уровня логирования из параметров --log_level
 
 import sys
+
+import allure
 import pytest
 from selenium import webdriver
 from selenium.webdriver import ChromeOptions
@@ -66,25 +68,9 @@ def create_local_driver(config):
     return driver
 
 
-@pytest.fixture()
-def driver(request, config):
-    """Вариант проброса драйвера через request.addfinalizer и return"""
-    driver = None
-    driver = create_local_driver(config)
-    request.instance.driver = driver
-    driver.delete_all_cookies()
-    driver.maximize_window()
-    driver.implicitly_wait(3)
-
-    def tear_down():
-        driver.quit()
-
-    request.addfinalizer(tear_down)
-    yield driver
-
-# @pytest.fixture()
+# @pytest.fixture(scope="function")
 # def driver(request, config):
-#     """Вариант проброса драйвера через yield"""
+#     """Вариант проброса драйвера через request.addfinalizer и return"""
 #     driver = None
 #     driver = create_local_driver(config)
 #     request.instance.driver = driver
@@ -92,11 +78,43 @@ def driver(request, config):
 #     driver.maximize_window()
 #     driver.implicitly_wait(3)
 #
-#     yield driver
+#     def tear_down():
+#         driver.quit()
+#
+#     request.addfinalizer(tear_down)
+#     return driver
 
 
-@pytest.fixture(scope='session', autouse=True)
-def create_log_file():
+@pytest.fixture()
+def driver(request, config):
+    """Вариант проброса драйвера через yield"""
+    driver = None
+    driver = create_local_driver(config)
+    request.instance.driver = driver
+    driver.delete_all_cookies()
+    driver.maximize_window()
+    driver.implicitly_wait(3)
+    yield driver
+
+
+@pytest.hookimpl(hookwrapper=True, tryfirst=True)
+def pytest_runtest_makereport(item):
+    """Скриншот при падении теста с аттачем к allure"""
+    outcome = yield
+    rep = outcome.get_result()
+    # marker = item.get_closest_marker("ui")
+    # if marker:
+    if rep.when == "call" and rep.failed:  # we only look at actual failing test calls, not setup/teardown
+        try:
+            allure.attach(item.instance.driver.get_screenshot_as_png(),
+                          name=item.name,
+                          attachment_type=allure.attachment_type.PNG)
+        except Exception as e:
+            print(e)
+
+
+@pytest.fixture(autouse=True)
+def create_log_file(request):
     """The rotation check is made before logging each message.
     If there is already an existing file with the same name that the file to be created,
     then the existing file is renamed by appending the date to its basename to prevent file overwriting.
@@ -104,9 +122,17 @@ def create_log_file():
     Examples: "100 MB", "0.5 GB", "1 month 2 weeks", "4 days", "10h",
     "monthly", "18:00", "sunday", "w0", "monday at 12:00
     can be compression='zip' """
+    log_level = request.config.getoption("--log_level")
+
     path_to_logs = Path.cwd() / "Reports" / "Logs"
-    info_handler = logger.add(path_to_logs / "start_in_{time}_debug.log",
-                              level=logging.DEBUG,
-                              format="{level}: {message}")
-    error_handler = logger.add(path_to_logs / "start_in_{time}_error.log",
-                               level=logging.ERROR)
+    if log_level == 'DEBUG':
+        logger.add(path_to_logs / "{time}_debug.log",
+                   level=logging.DEBUG,
+                   format="{level}: {message}")
+    if log_level == 'INFO':
+        logger.add(path_to_logs / "{time}_info.log",
+                   level=logging.INFO,
+                   format="{level}: {message}")
+
+    logger.add(path_to_logs / "{time}_error.log",
+               level=logging.ERROR)

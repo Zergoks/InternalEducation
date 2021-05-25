@@ -13,18 +13,6 @@ from typing import Union, List
 from Core.utils import get_project_root
 
 
-def screen_shot(result_message: str):
-    file_name = str(round(time.time() * 1000)) + ".png"
-    path_to_save = get_project_root() / "Reports" / "Screenshots"
-    try:
-        if not path_to_save.is_dir():
-            path_to_save.mkdir()
-        logger.info(f"Screenshot save to directory: {str(path_to_save)}. Name: {file_name}")
-    except:
-        logger.error("### Exception Occurred when taking screenshot")
-        raise
-
-
 class DriverCustom:
 
     def __init__(self, driver):
@@ -54,6 +42,20 @@ class DriverCustom:
             logger.error(f"Locator type: {locator_type} not correct/supported")
             raise NotImplementedError('Нет такого By')
 
+    def screen_shot(self, result_message: str = None):
+        """Делаем скриншот ui В произвольном месте
+        Авто скриншот вынесен в conftest.py на фейлы с аттачем к аллюру"""
+        file_name = str(round(time.time() * 1000)) + ".png"
+        path_to_save = get_project_root() / "Reports" / "Screenshots"
+        try:
+            if not path_to_save.is_dir():
+                path_to_save.mkdir()
+            self.driver.save_screenshot(str(path_to_save / file_name))
+            logger.info(f"Screenshot save to directory: {str(path_to_save)}. Name: {file_name}")
+        except:
+            logger.error("### Exception Occurred when taking screenshot")
+            raise
+
     def get_element(self, locator: str, locator_type: str = "css") -> WebElement:
         element = None
         locator_type = locator_type.lower()
@@ -63,8 +65,7 @@ class DriverCustom:
             element = wait.until(lambda driver: self.driver.find_element(by_type, locator))
             logger.info(f'Element found with locator: {locator} and locatorType: {locator_type}')
         except TimeoutException as e:
-            logger.exception(f"Element not found with locator: {locator} and locatorType: {locator_type}")
-            screen_shot(f'{locator}')
+            logger.error(f"Element not found with locator: {locator} and locatorType: {locator_type}")
         return element
 
     def get_elements(self, locator: str, locator_type: str = "css") -> List[WebElement]:
@@ -76,8 +77,7 @@ class DriverCustom:
             elements = wait.until(lambda driver: self.driver.find_elements(by_type, locator))
             logger.info(f'Elements found with locator: {locator} and locatorType: {locator_type}')
         except TimeoutException:
-            logger.exception(f"Elements not found with locator: {locator} and locatorType: {locator_type}")
-            # self.screen_shot(f'{locator}')
+            logger.error(f"Elements not found with locator: {locator} and locatorType: {locator_type}")
         return elements
 
     def clear_the_element(self, locator: str, locator_type: str = "css"):
@@ -90,7 +90,7 @@ class DriverCustom:
             element.send_keys(data)
             logger.info(f"Sent data to element with locator: {locator} and locatorType: {locator_type}")
         except TimeoutException:
-            logger.info(f"Cannot send data to element with locator: {locator} and locatorType: {locator_type}")
+            logger.error(f"Cannot send data to element with locator: {locator} and locatorType: {locator_type}")
 
     def wait_for_element_to_be_clickable(self,
                                          locator: str,
@@ -104,8 +104,10 @@ class DriverCustom:
                                  ignored_exceptions=[NoSuchElementException,
                                                      ElementNotVisibleException,
                                                      ElementNotSelectableException])
-            is_clickable = wait.until(EC.element_to_be_clickable((by_type,
+            element = wait.until(EC.element_to_be_clickable((by_type,
                                                                   locator)))
+            if element:
+                is_clickable = True
             logger.info(f"Element {locator} appeared on the web page. locatorType {locator_type}")
         except TimeoutException:
             logger.info(f"Element {locator} not appeared on the web page. LocatorType {locator_type}")
