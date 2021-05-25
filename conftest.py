@@ -1,5 +1,3 @@
-# TODO 1: добавить изменения уровня логирования из параметров --log_level
-
 import sys
 
 import allure
@@ -92,7 +90,7 @@ def driver(request, config):
     driver = create_local_driver(config)
     request.instance.driver = driver
     driver.delete_all_cookies()
-    driver.maximize_window()
+    driver.set_window_size(1920, 1080)
     driver.implicitly_wait(3)
     yield driver
 
