@@ -112,7 +112,7 @@ class DriverCustom:
                                                      ElementNotVisibleException,
                                                      ElementNotSelectableException])
             element = wait.until(EC.element_to_be_clickable((by_type,
-                                                                  locator)))
+                                                             locator)))
             if element:
                 is_clickable = True
             logger.info(f"Element {locator} appeared on the web page. locatorType {locator_type}")
@@ -140,3 +140,13 @@ class DriverCustom:
         element.click()
         logger.info(f"Clicked on element with locator: {locator} "
                     f"and locatorType: {locator_type}")
+
+    def get_element_attribute(self, attribute, locator, locator_type="css"):
+        element = self.get_element(locator, locator_type)
+        element_value = element.get_attribute(attribute)
+        if element_value:
+            logger.info(f"Element attribute {attribute} found with locator: {locator} and locatorType: {locator_type}")
+        else:
+            logger.warning(f"Element attribute {attribute} NOT found with locator: {locator} "
+                           f"and locatorType: {locator_type}")
+        return element_value

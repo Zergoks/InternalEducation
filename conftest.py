@@ -93,6 +93,7 @@ def driver(request, config):
     driver.set_window_size(1920, 1080)
     driver.implicitly_wait(3)
     yield driver
+    driver.quit()
 
 
 @pytest.hookimpl(hookwrapper=True, tryfirst=True)
@@ -113,13 +114,6 @@ def pytest_runtest_makereport(item):
 
 @pytest.fixture(autouse=True)
 def create_log_file(request):
-    """The rotation check is made before logging each message.
-    If there is already an existing file with the same name that the file to be created,
-    then the existing file is renamed by appending the date to its basename to prevent file overwriting.
-    This parameter accepts:
-    Examples: "100 MB", "0.5 GB", "1 month 2 weeks", "4 days", "10h",
-    "monthly", "18:00", "sunday", "w0", "monday at 12:00
-    can be compression='zip' """
     log_level = request.config.getoption("--log_level")
 
     path_to_logs = Path.cwd() / "Reports" / "Logs"
