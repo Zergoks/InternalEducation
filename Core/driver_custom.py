@@ -2,15 +2,18 @@
 # TODO 2: Добавить allure
 # TODO 3: wait_for_element_to_be_clickable может вынести фикстурой? или отельную фикстуру на ожидания
 
-import time
+from abc import abstractmethod
+from typing import Union, List
+
 from loguru import logger
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.common.by import By
 from selenium.common.exceptions import *
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.remote.webdriver import WebElement
-from typing import Union, List
+
 from Core.utils import get_project_root
+import time
 
 
 class DriverCustom:
@@ -41,6 +44,10 @@ class DriverCustom:
         else:
             logger.error(f"Locator type: {locator_type} not correct/supported")
             raise NotImplementedError('Нет такого By')
+
+    @abstractmethod
+    def at_page(self):
+        pass
 
     def screen_shot(self, result_message: str = None):
         """Делаем скриншот ui В произвольном месте

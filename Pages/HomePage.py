@@ -4,7 +4,7 @@ import loguru
 from Pages.BasePage import BasePage
 
 
-class HomePageLocators:
+class HomePage(BasePage):
     DynamicIdLink = ('(//h3/a)[1]', 'xpath')
     ClassAttributeLink = ('(//h3/a)[2]', 'xpath'),
     HiddenLayersLink = ('(//h3/a)[3]', 'xpath'),
@@ -22,15 +22,12 @@ class HomePageLocators:
     MouseOverLink = ('(//h3/a)[15]', 'xpath'),
     NonBreakingSpaceLink = ('(//h3/a)[16]', 'xpath')
 
-
-class HomePage(BasePage):
-
     def __init__(self, driver):
         super().__init__(driver)
         self.url = '/home'
         self.title = 'UI Test Automation Playground'
 
+    @allure.step("Переходим на страницу dynamic id")
     def go_to_dynamic_id_page(self):
-        self.wait_for_element_to_be_clickable(*HomePageLocators.DynamicIdLink)
-        with allure.step("Переходим на страницу dynamic id"):
-            self.click_on_element(*HomePageLocators.DynamicIdLink)
+        self.wait_for_element_to_be_clickable(*self.DynamicIdLink)
+        self.click_on_element(*self.DynamicIdLink)
