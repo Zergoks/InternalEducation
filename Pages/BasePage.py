@@ -11,17 +11,21 @@ class Header(DriverCustom):
     def __init__(self, driver):
         super().__init__(driver)
 
-    def go_to_ui_tap(self):
-        with allure.step("Переходим по лого в хедере"):
-            self.click_on_element(*self.UITAPLink)
+    @allure.step("Переходим по лого в хедере")
+    def click_on_uitap(self):
+        self.click_on_element(*self.UITAPLink)
 
+    @allure.step("Переходим по Home в хедере")
     def go_to_home_page(self):
-        with allure.step("Переходим по Home в хедере"):
-            self.click_on_element(*self.HomePageLink)
+        self.click_on_element(*self.HomePageLink)
 
+    @allure.step("Переходим по Resources в хедере")
     def go_to_resources_page(self):
-        with allure.step("Переходим по Resources в хедере"):
-            self.click_on_element(*self.ResourcesPageLink)
+        self.click_on_element(*self.ResourcesPageLink)
+
+    def at_page(self):
+        return True if self.get_element('body>nav', 'css') else False
+
 
 
 class BasePage(DriverCustom):
