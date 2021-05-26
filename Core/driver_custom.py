@@ -150,3 +150,13 @@ class DriverCustom:
             logger.warning(f"Element attribute {attribute} NOT found with locator: {locator} "
                            f"and locatorType: {locator_type}")
         return element_value
+
+    def is_alert_present(self) -> bool:
+        wait = WebDriverWait(self.driver, 10)
+        element = wait.until(EC.alert_is_present())
+        if element:
+            return True
+        return False
+
+    def switch_to_alert(self):
+        return self.driver.switch_to_alert()
