@@ -3,7 +3,10 @@ import pytest
 from Pages.HomePage import HomePage
 
 
+@allure.suite("Main page UI")
 class TestMainPage:
+
+    @allure.title("У Main page корректный title")
     def test_home_page_title_is_correct(self, driver):
         home_page = HomePage(driver)
         home_page.go_to_home_page()
@@ -15,6 +18,8 @@ class TestMainPage:
                                                     f'EX: {home_page.title}, ' \
                                                     f'AR: {driver.title}'
 
+    @allure.feature("Header")
+    @allure.title("Header присутствует на странице Main Page")
     def test_header_is_present(self, driver):
         home_page = HomePage(driver)
         home_page.go_to_home_page()
