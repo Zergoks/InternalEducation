@@ -110,6 +110,7 @@ def pytest_runtest_makereport(item):
                           attachment_type=allure.attachment_type.PNG)
         except Exception as e:
             print(e)
+            logger.error("screenshot failed")
 
 
 @pytest.fixture(autouse=True)
