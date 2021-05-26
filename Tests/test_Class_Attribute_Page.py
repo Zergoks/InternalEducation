@@ -53,7 +53,6 @@ class TestClassAttributePage:
             assert class_attribute_page.is_alert_present() is True, \
                 "Alert не появился"
 
-    @pytest.mark.test
     @allure.feature("Blue button")
     @allure.title("Алерт после нажатия кнопки содержит текст")
     @allure.severity(allure.severity_level.NORMAL)
@@ -68,6 +67,21 @@ class TestClassAttributePage:
                 f"Текст alert не соответствует требованиям.\n" \
                 f"AR: {class_attribute_page.get_alert_text()}\n " \
                 f"EX: {class_attribute_page.text['BlueButtonAlertText']}"
+
+    @pytest.mark.test
+    @allure.feature("Blue button")
+    @allure.title("Алерт исчезает после подтверждения")
+    @allure.severity(allure.severity_level.NORMAL)
+    def test_blue_button_alert(self, driver):
+        home_page = HomePage(driver)
+        class_attribute_page = ClassAttributePage(driver)
+        home_page.go_to_home_page()
+        home_page.go_to_class_attribute_page()
+        class_attribute_page.click_on_blue_button()
+        class_attribute_page.accept_alert()
+        with allure.step("Проверяем, что алерт закрылся после подтверждения"):
+            assert class_attribute_page.is_alert_present() is False, \
+                "Alert не закрылся после подвтерждения"
 
     @allure.feature("Green button")
     @allure.title("Green button на странице Class Attribute кликабельна")

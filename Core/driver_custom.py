@@ -153,10 +153,13 @@ class DriverCustom:
 
     def is_alert_present(self) -> bool:
         wait = WebDriverWait(self.driver, 10)
-        element = wait.until(EC.alert_is_present())
-        if element:
-            return True
-        return False
+        try:
+            wait.until(EC.alert_is_present())
+        except TimeoutException:
+            logger.info(f"alert not found")
+            return False
+        logger.info(f"alert found")
+        return True
 
     def switch_to_alert(self):
-        return self.driver.switch_to_alert()
+        return self.driver.switch_to.alert

@@ -50,3 +50,7 @@ class BasePage(DriverCustom):
     def refresh_page(self):
         logger.info(f"refresh page")
         self.driver.refresh()
+
+    @allure.step("Подтверждаем alert")
+    def accept_alert(self):
+        self.switch_to_alert().accept()
