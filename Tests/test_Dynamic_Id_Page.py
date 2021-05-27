@@ -36,7 +36,8 @@ class TestDynamicIdPage:
         home_page.go_to_home_page()
         home_page.go_to_dynamic_id_page()
         with allure.step("Проверяем, что кнопка dynamic id кликабельна"):
-            assert dynamic_id_page.is_element_clickable(*dynamic_id_page.ButtonWithDynamicId) is True, f'Кнопка dynamic id не кликабельна.'
+            assert dynamic_id_page.is_element_clickable(*dynamic_id_page.ButtonWithDynamicId) is True, \
+                f'Кнопка dynamic id не кликабельна.'
 
     @allure.title("Атрибут id у dynamic id button генерируется автоматически")
     @allure.feature("Dynamic id button")
