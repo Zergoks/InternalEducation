@@ -29,10 +29,12 @@ class HomePage(BasePage):
 
     @allure.step("Переходим на страницу dynamic id")
     def go_to_dynamic_id_page(self):
-        self.wait_for_element_to_be_clickable(*self.DynamicIdLink)
         self.click_on_element(*self.DynamicIdLink)
 
     @allure.step("Переходим на страницу Class Attribute")
     def go_to_class_attribute_page(self):
-        self.wait_for_element_to_be_clickable(*self.ClassAttributeLink)
         self.click_on_element(*self.ClassAttributeLink)
+
+    @allure.step("Переходим на страницу Hidden Layers")
+    def go_to_hidden_layer_page(self):
+        self.click_on_element(*self.HiddenLayersLink)

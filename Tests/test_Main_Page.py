@@ -3,7 +3,7 @@ import pytest
 from Pages.HomePage import HomePage
 
 
-@allure.suite("Main page UI")
+@allure.suite("Main Page UI")
 class TestMainPage:
 
     @allure.title("У Main page корректный title")

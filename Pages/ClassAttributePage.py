@@ -16,9 +16,6 @@ class ClassAttributePage(BasePage):
         self.title = 'Class Attribute'
         self.text = Text
 
-    def button_is_clickable(self, button):
-        return self.wait_for_element_to_be_clickable(*button)
-
     @allure.step("Нажимаем на blue button")
     def click_on_blue_button(self):
         self.click_on_element(*self.BlueButton)

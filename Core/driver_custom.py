@@ -103,7 +103,8 @@ class DriverCustom:
                                          locator: str,
                                          locator_type: str = "id",
                                          timeout: Union[int, float] = 10,
-                                         poll_frequency: Union[int, float] = 0.5) -> bool:
+                                         poll_frequency: Union[int, float] = 0.5):
+        element = None
         by_type = self.get_by_type(locator_type)
         try:
             logger.info(f"Waiting for maximum: {timeout} seconds for element to be clickable")
@@ -113,13 +114,11 @@ class DriverCustom:
                                                      ElementNotSelectableException])
             element = wait.until(EC.element_to_be_clickable((by_type,
                                                              locator)))
-            if element:
-                is_clickable = True
+
             logger.info(f"Element {locator} appeared on the web page. locatorType {locator_type}")
         except TimeoutException:
             logger.info(f"Element {locator} not appeared on the web page. LocatorType {locator_type}")
-            is_clickable = False
-        return is_clickable
+        return element
 
     def scroll_into_view(self, locator: str, locator_type: str = "css"):
         try:
@@ -134,9 +133,7 @@ class DriverCustom:
                              f"and locatorType: {locator_type}")
 
     def click_on_element(self, locator: str, locator_type: str = "css") -> None:
-        locator_type = locator_type.lower()
-        by_type = self.get_by_type(locator_type)
-        element = self.driver.find_element(by_type, locator)
+        element = self.wait_for_element_to_be_clickable(locator, locator_type)
         element.click()
         logger.info(f"Clicked on element with locator: {locator} "
                     f"and locatorType: {locator_type}")
@@ -150,6 +147,23 @@ class DriverCustom:
             logger.warning(f"Element attribute {attribute} NOT found with locator: {locator} "
                            f"and locatorType: {locator_type}")
         return element_value
+
+    def is_element_clickable(self, locator, locator_type="css"):
+        element = self.wait_for_element_to_be_clickable(locator, locator_type)
+        if element:
+            return True
+        return False
+
+    def is_element_visible(self, locator, locator_type="css"):
+        try:
+            by_type = self.get_by_type(locator_type)
+            wait = WebDriverWait(self.driver, 10)
+            elem = wait.until(EC.visibility_of_element_located((by_type, locator)))
+            logger.info(f"Element {locator} with and locatorType: {locator_type} is visible")
+            return True
+        except TimeoutException:
+            logger.info(f"Element {locator} with and locatorType: {locator_type} is not visible")
+            return False
 
     def is_alert_present(self) -> bool:
         wait = WebDriverWait(self.driver, 10)

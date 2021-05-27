@@ -1,10 +1,12 @@
+from time import sleep
+
 import allure
 import pytest
 
 from Pages.HomePage import HomePage
 from Pages.ClassAttributePage import ClassAttributePage
 
-
+@allure.suite("Class Attribute Page UI")
 class TestClassAttributePage:
 
     @allure.title("У dynamic id page корректный title")
@@ -37,7 +39,7 @@ class TestClassAttributePage:
         home_page.go_to_home_page()
         home_page.go_to_class_attribute_page()
         with allure.step("Проверяем, что кнопка кликабельна"):
-            assert class_attribute_page.button_is_clickable(ClassAttributePage.BlueButton) is True, \
+            assert class_attribute_page.is_element_visible(*ClassAttributePage.BlueButton) is True, \
                 "Blue button не кликабельна"
 
     @allure.feature("Blue button")
@@ -56,7 +58,7 @@ class TestClassAttributePage:
     @allure.feature("Blue button")
     @allure.title("Алерт после нажатия кнопки содержит текст")
     @allure.severity(allure.severity_level.NORMAL)
-    def test_blue_button_alert(self, driver):
+    def test_blue_button_alert_text(self, driver):
         home_page = HomePage(driver)
         class_attribute_page = ClassAttributePage(driver)
         home_page.go_to_home_page()
@@ -68,11 +70,10 @@ class TestClassAttributePage:
                 f"AR: {class_attribute_page.get_alert_text()}\n " \
                 f"EX: {class_attribute_page.text['BlueButtonAlertText']}"
 
-    @pytest.mark.test
     @allure.feature("Blue button")
     @allure.title("Алерт исчезает после подтверждения")
     @allure.severity(allure.severity_level.NORMAL)
-    def test_blue_button_alert(self, driver):
+    def test_blue_button_alert_is_disappeared_after_click(self, driver):
         home_page = HomePage(driver)
         class_attribute_page = ClassAttributePage(driver)
         home_page.go_to_home_page()
@@ -92,7 +93,7 @@ class TestClassAttributePage:
         home_page.go_to_home_page()
         home_page.go_to_class_attribute_page()
         with allure.step("Проверяем, что кнопка кликабельна"):
-            assert class_attribute_page.button_is_clickable(ClassAttributePage.GreenButton) is True, \
+            assert class_attribute_page.is_element_visible(*ClassAttributePage.GreenButton) is True, \
                 "Green button не кликабельна"
 
     @allure.feature("Orange button")
@@ -104,5 +105,5 @@ class TestClassAttributePage:
         home_page.go_to_home_page()
         home_page.go_to_class_attribute_page()
         with allure.step("Проверяем, что кнопка кликабельна"):
-            assert class_attribute_page.button_is_clickable(ClassAttributePage.OrangeButton) is True, \
+            assert class_attribute_page.is_element_visible(*ClassAttributePage.OrangeButton) is True, \
                 "Orange button не кликабельна"
