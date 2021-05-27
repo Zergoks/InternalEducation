@@ -6,6 +6,7 @@ import pytest
 from Pages.HomePage import HomePage
 from Pages.ClassAttributePage import ClassAttributePage
 
+
 @allure.suite("Class Attribute Page UI")
 class TestClassAttributePage:
 

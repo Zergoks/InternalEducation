@@ -38,3 +38,7 @@ class HomePage(BasePage):
     @allure.step("Переходим на страницу Hidden Layers")
     def go_to_hidden_layer_page(self):
         self.click_on_element(*self.HiddenLayersLink)
+
+    @allure.step("Переходим на страницу Load Delay")
+    def go_to_load_delay_page(self):
+        self.click_on_element(*self.LoadDelayLink)
