@@ -24,19 +24,27 @@ class Header(DriverCustom):
         self.click_on_element(*self.ResourcesPageLink)
 
     def at_page(self):
-        return True if self.get_element('body>nav', 'css') else False
+        return self.is_element_visible(*self.UITAPLink)
 
+
+class Footer(DriverCustom):
+    LicenseLink = ('//*[@id="license"]/a', 'xpath')
+
+    def at_page(self):
+        return self.is_element_visible(*self.LicenseLink)
 
 
 class BasePage(DriverCustom):
 
-    def __init__(self, driver, has_header=True):
+    def __init__(self, driver, has_header=True, has_footer=True):
         super().__init__(driver)
         self.base_url = 'http://uitestingplayground.com'
         self.url = '/'
 
         if has_header:
             self.header = Header(driver)
+        if has_footer:
+            self.footer = Footer(driver)
 
     @allure.step("Переходим на main page")
     def go_to_home_page(self):
