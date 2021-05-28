@@ -52,7 +52,7 @@ class HomePage(BasePage):
         self.click_on_element(*self.ClientSideDelayLink)
 
     @allure.step("Переходим на страницу Click Link")
-    def go_to_click_link_page(self):
+    def go_to_click_page(self):
         self.click_on_element(*self.ClickLink)
 
     @allure.step("Переходим на страницу Text Input")

@@ -6,6 +6,7 @@ from Pages.AJAXDataPage import AJAXDataPage
 
 from Core.utils import explicit_sleep as sleep
 
+
 @allure.suite("AJAX Data Page UI")
 class TestAJAXDataPage:
 
