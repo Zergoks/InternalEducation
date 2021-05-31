@@ -10,3 +10,6 @@ def explicit_sleep(time=1):
     """Вынесено в отдельную функцию чтобы было проще рефакторить,
     когда будет понятно решение проблемы"""
     sleep(time)
+
+def generate_random(amount):
+    return [x for x in range(amount)]

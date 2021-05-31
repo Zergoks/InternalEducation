@@ -20,9 +20,10 @@ class TestMainPage:
 
     @allure.feature("Header")
     @allure.title("Header присутствует на странице Main Page")
-    def test_header_is_present(self, driver):
+    def test_header_is_present(self, driver, generated_string):
         home_page = HomePage(driver)
         home_page.go_to_home_page()
         home_page.go_to_dynamic_id_page()
+
         with allure.step("Проверяем, что header присутствует на странице"):
             assert home_page.header.at_page() is True, f'Отсутствует header на странице'
