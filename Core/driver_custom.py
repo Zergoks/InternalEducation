@@ -167,8 +167,8 @@ class DriverCustom:
             logger.info(f"Element {locator} with and locatorType: {locator_type} is not visible")
             return False
 
-    def is_alert_present(self) -> bool:
-        wait = WebDriverWait(self.driver, 10)
+    def is_alert_present(self, timeout=10) -> bool:
+        wait = WebDriverWait(self.driver, timeout)
         try:
             wait.until(EC.alert_is_present())
         except TimeoutException:
