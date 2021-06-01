@@ -6,9 +6,9 @@ import loguru
 from selenium.webdriver.common.by import By
 
 class ClassAttributePage(BasePage):
-    BlueButton = (".btn-primary", By.ID)
-    GreenButton = (".btn-success", "css")
-    OrangeButton = (".btn-warning", "css")
+    BlueButton = (".btn-primary", By.CSS_SELECTOR)
+    GreenButton = (".btn-success", By.CSS_SELECTOR)
+    OrangeButton = (".btn-warning", By.CSS_SELECTOR)
 
     def __init__(self, driver):
         super().__init__(driver)

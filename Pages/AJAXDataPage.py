@@ -1,12 +1,12 @@
 import allure
 
 from Pages.BasePage import BasePage
-import loguru
+from selenium.webdriver.common.by import By
 
 
 class AJAXDataPage(BasePage):
-    TriggeringAJAXButton = ('//button[@id="ajaxButton"]', 'xpath')
-    SuccessNotification = ('//*[@class="bg-success"]', 'xpath')
+    TriggeringAJAXButton = ('//button[@id="ajaxButton"]', By.XPATH)
+    SuccessNotification = ('//*[@class="bg-success"]', By.XPATH)
 
     def __init__(self, driver):
         super().__init__(driver)

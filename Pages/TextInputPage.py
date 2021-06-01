@@ -1,11 +1,11 @@
 import allure
-
+from selenium.webdriver.common.by import By
 from Pages.BasePage import BasePage
 
 
 class TextInput(BasePage):
-    TextInputField = ('//input[@type="text"]', 'xpath')
-    UpdatingButton = ('//button[@id="updatingButton"]', 'xpath')
+    TextInputField = ('//input[@type="text"]', By.XPATH)
+    UpdatingButton = ('//button[@id="updatingButton"]', By.XPATH)
 
     def __init__(self, driver):
         super().__init__(driver)

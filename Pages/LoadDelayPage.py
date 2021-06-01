@@ -1,10 +1,10 @@
 import allure
-
+from selenium.webdriver.common.by import By
 from Pages.BasePage import BasePage
 
 
 class LoadDelayPage(BasePage):
-    AppearingAfterDelayButton = ('//*[@class="container"]/button', 'xpath')
+    AppearingAfterDelayButton = ('//*[@class="container"]/button', By.XPATH)
 
     def __init__(self, driver):
         super().__init__(driver)

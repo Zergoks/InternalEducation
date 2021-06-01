@@ -1,12 +1,12 @@
 import allure
 import pytest
-
+from selenium.webdriver.common.by import By
 from Pages.BasePage import BasePage
 
 
 class ClientSideDelay(BasePage):
-    TriggeringClientSideLogicButton = ('//button[@id="ajaxButton"]', 'xpath')
-    SuccessNotification = ('//*[@class="bg-success"]', 'xpath')
+    TriggeringClientSideLogicButton = ('//button[@id="ajaxButton"]', By.XPATH)
+    SuccessNotification = ('//*[@class="bg-success"]', By.XPATH)
 
     def __init__(self, driver):
         super().__init__(driver)
