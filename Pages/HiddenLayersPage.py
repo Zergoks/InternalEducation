@@ -15,8 +15,8 @@ class HiddenLayerPage(BasePage):
 
     @allure.step("Нажимаем на зеленую кнопку")
     def click_on_green_button(self):
-        self.click_on_element(*self.greenButton)
+        self.click_on_element(self.greenButton)
 
     @allure.step("Нажимаем на синюю кнопку")
     def click_on_blue_button(self):
-        self.click_on_element(*self.blueButton)
+        self.click_on_element(self.blueButton)

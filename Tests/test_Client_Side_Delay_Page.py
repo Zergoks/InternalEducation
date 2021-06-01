@@ -19,5 +19,5 @@ class TestClientSideDelayPage:
         sleep(1)
         client_delay_page.click_on_triggering_client_side_logic_button()
         with allure.step("Проверям, что за 30 секунд появляется нотификация успехом запроса"):
-            assert client_delay_page.is_element_visible(*client_delay_page.SuccessNotification, timeout=30) is True, \
+            assert client_delay_page.is_element_visible(client_delay_page.SuccessNotification, timeout=30) is True, \
                 "Не появилась нотификация"

@@ -5,7 +5,6 @@ from typing import Union, List
 
 from loguru import logger
 from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.common.by import By
 from selenium.common.exceptions import *
 from selenium.webdriver.support import expected_conditions as ec
 from selenium.webdriver.remote.webdriver import WebElement
@@ -37,9 +36,10 @@ class DriverCustom:
             logger.error("### Exception Occurred when taking screenshot")
             raise
 
-    def get_element(self, locator: str, by_type: By = By.XPATH) -> WebElement:
+    def get_element(self, locator_model: tuple, timeout: Union[int, float] = 10) -> WebElement:
         element = None
-        wait = WebDriverWait(self.driver, 10)
+        locator, by_type = locator_model
+        wait = WebDriverWait(self.driver, timeout)
         try:
             element = wait.until(lambda driver: self.driver.find_element(by_type, locator))
             logger.info(f'Element found with locator: {locator} and locatorType: {by_type}')
@@ -47,9 +47,10 @@ class DriverCustom:
             logger.error(f"Element not found with locator: {locator} and locatorType: {by_type}")
         return element
 
-    def get_elements(self, locator: str, by_type: By = By.XPATH, timeout: Union[int, float] = 10) -> List[WebElement]:
+    def get_elements(self, locator_model: tuple, timeout: Union[int, float] = 10) -> List[WebElement]:
         elements = None
         wait = WebDriverWait(self.driver, timeout)
+        locator, by_type = locator_model
         try:
             elements = wait.until(lambda driver: self.driver.find_elements(by_type, locator))
             logger.info(f'Elements found with locator: {locator} and locatorType: {by_type}')
@@ -57,24 +58,25 @@ class DriverCustom:
             logger.error(f"Elements not found with locator: {locator} and locatorType: {by_type}")
         return elements
 
-    def clear_the_element(self, locator: str, by_type: By = By.XPATH):
-        element = self.get_element(locator, by_type)
+    def clear_the_element(self, locator_model: tuple):
+        element = self.get_element(locator_model)
         element.clear()
+        logger.info(f"Cleared element with locator_model: {locator_model}")
 
-    def send_keys_to(self, data: str, locator: str, by_type: By = By.XPATH):
-        element = self.get_element(locator, by_type)
+    def send_keys_to(self, data: str, locator_model: tuple):
+        element = self.get_element(locator_model)
         try:
             element.send_keys(data)
-            logger.info(f"Sent data to element with locator: {locator} and locatorType: {by_type}")
+            logger.info(f"Sent data to element with locator_model: {locator_model}")
         except TimeoutException:
-            logger.error(f"Cannot send data to element with locator: {locator} and locatorType: {by_type}")
+            logger.error(f"Cannot send data to element with locator_model: {locator_model}")
 
     def wait_for_element_to_be_clickable(self,
-                                         locator: str,
-                                         by_type: By = By.XPATH,
+                                         locator_model: tuple,
                                          timeout: Union[int, float] = 10,
                                          poll_frequency: Union[int, float] = 0.5):
         element = None
+        locator, by_type = locator_model
         try:
             logger.info(f"Waiting for maximum: {timeout} seconds for element to be clickable")
             wait = WebDriverWait(self.driver, timeout, poll_frequency=poll_frequency,
@@ -91,40 +93,36 @@ class DriverCustom:
             logger.info(f"Element {locator} not appeared on the web page. LocatorType {by_type}")
         return element
 
-    def scroll_into_view(self, locator: str, by_type: By = By.XPATH):
+    def scroll_into_view(self, locator_model: tuple):
         try:
-            element = self.get_element(locator, by_type)
+            element = self.get_element(locator_model)
             self.driver.execute_script("arguments[0].scrollIntoView();", element)
-            logger.info(f"Scrolled to element with locator: {locator} "
-                        f"and locatorType: {by_type}")
+            logger.info(f"Scrolled to element with locator_model: {locator_model}")
         except:
-            # from pdb import set_trace; set_trace()
-            logger.exception(f"Can't be scrolled to element with locator: {locator} "
-                             f"and locatorType: {by_type}")
+            logger.exception(f"Can't be scrolled to element with locator_model: {locator_model}")
 
-    def click_on_element(self, locator: str, by_type: By = By.XPATH) -> None:
-        element = self.wait_for_element_to_be_clickable(locator, by_type)
+    def click_on_element(self, locator_model: tuple) -> None:
+        element = self.wait_for_element_to_be_clickable(locator_model)
         element.click()
-        logger.info(f"Clicked on element with locator: {locator} "
-                    f"and locatorType: {by_type}")
+        logger.info(f"Clicked on element with locator_model: {locator_model}")
 
-    def get_element_attribute(self, attribute, locator, by_type: By = By.XPATH):
-        element = self.get_element(locator, by_type)
+    def get_element_attribute(self, attribute, locator_model: tuple):
+        element = self.get_element(locator_model)
         element_value = element.get_attribute(attribute)
         if element_value:
-            logger.info(f"Element attribute {attribute} found with locator: {locator} and locatorType: {by_type}")
+            logger.info(f"Element attribute {attribute} found with locator_model: {locator_model}")
         else:
-            logger.warning(f"Element attribute {attribute} NOT found with locator: {locator} "
-                           f"and locatorType: {by_type}")
+            logger.warning(f"Element attribute {attribute} NOT found with locator_model: {locator_model}")
         return element_value
 
-    def is_element_clickable(self, locator, by_type: By = By.XPATH):
-        element = self.wait_for_element_to_be_clickable(locator, by_type)
+    def is_element_clickable(self, locator_model: tuple):
+        element = self.wait_for_element_to_be_clickable(locator_model)
         if element:
             return True
         return False
 
-    def is_element_visible(self, locator, by_type: By = By.XPATH, timeout=10):
+    def is_element_visible(self, locator_model: tuple, timeout=10):
+        locator, by_type = locator_model
         try:
             wait = WebDriverWait(self.driver, timeout)
             wait.until(ec.visibility_of_element_located((by_type, locator)))

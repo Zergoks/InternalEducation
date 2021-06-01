@@ -19,8 +19,8 @@ class TestClickPage:
         sleep(1)
         click_page.click_on_bad_button()
         with allure.step("Проверям, что после нажатия на bad button появился success button"):
-            assert click_page.is_element_clickable(*click_page.SuccessButton) is True, \
+            assert click_page.is_element_clickable(click_page.SuccessButton) is True, \
                 "Не появилась success button"
         with allure.step("Проверям, что bad button больше не кликабельна после нажатия"):
-            assert click_page.is_element_clickable(*click_page.BadButton) is False, \
+            assert click_page.is_element_clickable(click_page.BadButton) is False, \
                 "Bad button кликабельна"

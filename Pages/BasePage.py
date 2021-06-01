@@ -14,25 +14,25 @@ class Header(DriverCustom):
 
     @allure.step("Переходим по лого в хедере")
     def click_on_uitap(self):
-        self.click_on_element(*self.UITAPLink)
+        self.click_on_element(self.UITAPLink)
 
     @allure.step("Переходим по Home в хедере")
     def go_to_home_page(self):
-        self.click_on_element(*self.HomePageLink)
+        self.click_on_element(self.HomePageLink)
 
     @allure.step("Переходим по Resources в хедере")
     def go_to_resources_page(self):
-        self.click_on_element(*self.ResourcesPageLink)
+        self.click_on_element(self.ResourcesPageLink)
 
     def at_page(self):
-        return self.is_element_visible(*self.UITAPLink)
+        return self.is_element_visible(self.UITAPLink)
 
 
 class Footer(DriverCustom):
     LicenseLink = ('//*[@id="license"]/a', By.XPATH)
 
     def at_page(self):
-        return self.is_element_visible(*self.LicenseLink)
+        return self.is_element_visible(self.LicenseLink)
 
 
 class BasePage(DriverCustom):

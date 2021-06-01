@@ -15,4 +15,4 @@ class ClientSideDelay(BasePage):
 
     @allure.step("Нажимаем на Triggering Client Side Logic button")
     def click_on_triggering_client_side_logic_button(self):
-        self.click_on_element(*self.TriggeringClientSideLogicButton)
+        self.click_on_element(self.TriggeringClientSideLogicButton)
