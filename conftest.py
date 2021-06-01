@@ -17,7 +17,7 @@ AMOUNT_RANDOM_STRINGS = 3
 string_generator = list_of_random_strings(AMOUNT_RANDOM_STRINGS)
 
 
-def pytest_addoption(parser):
+def pytest_add_option(parser):
     parser.addoption("--browser", action="store", default="chrome",
                      help="Choose browser: chrome or firefox")
     parser.addoption("--browser_ver", action="store", default="")
