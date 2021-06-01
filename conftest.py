@@ -86,7 +86,6 @@ def create_local_driver(config):
 @pytest.fixture()
 def driver(request, config):
     """Вариант проброса драйвера через yield"""
-    driver = None
     driver = create_local_driver(config)
     request.instance.driver = driver
     driver.delete_all_cookies()
