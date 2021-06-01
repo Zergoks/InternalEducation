@@ -11,8 +11,7 @@ from Core.utils import explicit_sleep as sleep
 class TestClickPage:
 
     @allure.title("После нажатия bad button изменяется на success button")
-    @pytest.mark.test
-    def test_success_button__is_visible_after_click_bad_button(self, driver):
+    def test_success_button_is_visible_after_click_bad_button(self, driver):
         home_page = HomePage(driver)
         click_page = ClickPage(driver)
         home_page.go_to_home_page()

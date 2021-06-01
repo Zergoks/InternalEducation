@@ -178,4 +178,7 @@ class DriverCustom:
         return True
 
     def switch_to_alert(self):
+        logger.info("switch to alert")
         return self.driver.switch_to.alert
+
+
