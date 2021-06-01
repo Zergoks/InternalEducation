@@ -10,11 +10,11 @@ from webdriver_manager.firefox import GeckoDriverManager
 from loguru import logger
 import logging
 from pathlib import Path
-from Core.utils import generate_random
+from Core.utils import list_of_random_strings
 
 
-AMOUNT = 2
-generator = generate_random(AMOUNT)
+AMOUNT_RANDOM_STRINGS = 2
+generator = list_of_random_strings(AMOUNT_RANDOM_STRINGS)
 
 def pytest_addoption(parser):
     parser.addoption("--browser", action="store", default="chrome",
@@ -102,7 +102,7 @@ def driver(request, config):
 
 
 @pytest.fixture(scope='function', params='generator')
-def generated_string(request):
+def generated_mix_string(request):
     yield request.param
 
 
