@@ -1,11 +1,11 @@
 import allure
 
 from Pages.BasePage import BasePage
-
+from selenium.webdriver.common.by import By
 
 class ClickPage(BasePage):
-    BadButton = ('//*[@class="btn btn-primary"]', 'xpath')
-    SuccessButton = ('//*[@class="btn btn-success"]', 'xpath')
+    BadButton = ('//*[@class="btn btn-primary"]', By.XPATH)
+    SuccessButton = ('//*[@class="btn btn-success"]', By.XPATH)
 
     def __init__(self, driver):
         super().__init__(driver)

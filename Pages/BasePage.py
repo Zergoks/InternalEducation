@@ -1,12 +1,13 @@
 import allure
 from loguru import logger
-from Core.driver_custom import DriverCustom
+from Core.driver_extension import DriverCustom
+from selenium.webdriver.common.by import By
 
 
 class Header(DriverCustom):
-    UITAPLink = ("//a[@class='navbar-brand']", 'xpath')
-    HomePageLink = ("//a[@href='/home']", 'xpath')
-    ResourcesPageLink = ("//a[@href='/resources']", 'xpath')
+    UITAPLink = ("//a[@class='navbar-brand']", By.XPATH)
+    HomePageLink = ("//a[@href='/home']", By.XPATH)
+    ResourcesPageLink = ("//a[@href='/resources']", By.XPATH)
 
     def __init__(self, driver):
         super().__init__(driver)
@@ -28,7 +29,7 @@ class Header(DriverCustom):
 
 
 class Footer(DriverCustom):
-    LicenseLink = ('//*[@id="license"]/a', 'xpath')
+    LicenseLink = ('//*[@id="license"]/a', By.XPATH)
 
     def at_page(self):
         return self.is_element_visible(*self.LicenseLink)

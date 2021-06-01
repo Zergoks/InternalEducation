@@ -1,10 +1,10 @@
 import allure
 
 from Pages.BasePage import BasePage
-
+from selenium.webdriver.common.by import By
 
 class DynamicIdPage(BasePage):
-    ButtonWithDynamicId = ("//h4/following-sibling::button", 'xpath')
+    ButtonWithDynamicId = ("//h4/following-sibling::button", By.XPATH)
 
     def __init__(self, driver):
         super().__init__(driver)

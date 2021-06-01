@@ -2,11 +2,11 @@ import allure
 import pytest
 
 from Pages.BasePage import BasePage
-
+from selenium.webdriver.common.by import By
 
 class HiddenLayerPage(BasePage):
-    greenButton = ('//*[@id="greenButton"]', 'xpath')
-    blueButton = ('//*[@id="blueButton"]', 'xpath')
+    greenButton = ('//*[@id="greenButton"]', By.XPATH)
+    blueButton = ('//*[@id="blueButton"]', By.XPATH)
 
     def __init__(self, driver):
         super().__init__(driver)
