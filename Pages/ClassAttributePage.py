@@ -3,10 +3,10 @@ import allure
 from Pages.BasePage import BasePage
 from Core.ui_text import ClassAttributePage as Text
 import loguru
-
+from selenium.webdriver.common.by import By
 
 class ClassAttributePage(BasePage):
-    BlueButton = (".btn-primary", "css")
+    BlueButton = (".btn-primary", By.ID)
     GreenButton = (".btn-success", "css")
     OrangeButton = (".btn-warning", "css")
 

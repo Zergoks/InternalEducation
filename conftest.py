@@ -10,6 +10,11 @@ from webdriver_manager.firefox import GeckoDriverManager
 from loguru import logger
 import logging
 from pathlib import Path
+from Core.utils import list_of_random_strings
+
+
+AMOUNT_RANDOM_STRINGS = 3
+string_generator = list_of_random_strings(AMOUNT_RANDOM_STRINGS)
 
 
 def pytest_addoption(parser):
@@ -94,6 +99,12 @@ def driver(request, config):
     driver.implicitly_wait(3)
     yield driver
     driver.quit()
+
+
+
+@pytest.fixture(scope='function', params=string_generator)
+def generated_mix_string(request):
+    yield request.param
 
 
 @pytest.hookimpl(hookwrapper=True, tryfirst=True)
