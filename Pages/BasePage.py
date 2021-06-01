@@ -1,6 +1,6 @@
 import allure
 from loguru import logger
-from Core.driver_custom import DriverCustom
+from Core.driver_extension import DriverCustom
 from selenium.webdriver.common.by import By
 
 
