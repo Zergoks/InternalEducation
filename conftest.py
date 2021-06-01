@@ -101,7 +101,6 @@ def driver(request, config):
     driver.quit()
 
 
-
 @pytest.fixture(scope='function', params=string_generator)
 def generated_mix_string(request):
     yield request.param
