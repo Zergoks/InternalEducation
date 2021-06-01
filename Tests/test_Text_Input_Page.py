@@ -1,5 +1,4 @@
 import allure
-from loguru import logger
 import pytest
 
 from Pages.HomePage import HomePage
@@ -19,8 +18,8 @@ class TestTextInputPage:
         home_page.go_to_home_page()
         home_page.go_to_text_input_page()
         sleep(1)
-        text_input_page.send_keys_to(generated_mix_string, *text_input_page.TextInputField)
+        text_input_page.send_keys_to(generated_mix_string, text_input_page.TextInputField)
         text_input_page.click_on_updating_button()
         with allure.step("Проверям, что после нажатия название кнопки изменилось на ввреденное в текстовое поле"):
-            assert text_input_page.get_element(*text_input_page.UpdatingButton).text == generated_mix_string, \
+            assert text_input_page.get_element(text_input_page.UpdatingButton).text == generated_mix_string, \
                 "Текст кнопки не равен введенному значению в поле"

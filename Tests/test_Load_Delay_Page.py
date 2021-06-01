@@ -1,5 +1,4 @@
 import allure
-import pytest
 
 from Pages.HomePage import HomePage
 from Pages.LoadDelayPage import LoadDelayPage
@@ -15,5 +14,5 @@ class TestLoadDelayPage:
         home_page.go_to_home_page()
         home_page.go_to_load_delay_page()
         with allure.step("Проверяем, что синяя кнопка кликабельна"):
-            assert load_delay_page.is_element_clickable(*load_delay_page.AppearingAfterDelayButton) is True, \
+            assert load_delay_page.is_element_clickable(load_delay_page.AppearingAfterDelayButton) is True, \
                 "Не кликабельна синяя кнопка кнопка"

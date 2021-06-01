@@ -15,8 +15,8 @@ class TestDynamicIdPage:
         home_page.go_to_dynamic_id_page()
         with allure.step("Сравниваем текущий тайтл страницы с ожидаемым"):
             assert dynamic_id_page.title in driver.title, f'Тайтл страницы отличается. ' \
-                                                            f'EX: {dynamic_id_page.title}, ' \
-                                                            f'AR: {driver.title}'
+                                                          f'EX: {dynamic_id_page.title}, ' \
+                                                          f'AR: {driver.title}'
 
     @allure.feature("Header")
     @allure.title("Header присутствует на странице Dynamic id Page")
@@ -36,7 +36,7 @@ class TestDynamicIdPage:
         home_page.go_to_home_page()
         home_page.go_to_dynamic_id_page()
         with allure.step("Проверяем, что кнопка dynamic id кликабельна"):
-            assert dynamic_id_page.is_element_clickable(*dynamic_id_page.ButtonWithDynamicId) is True, \
+            assert dynamic_id_page.is_element_clickable(dynamic_id_page.ButtonWithDynamicId) is True, \
                 f'Кнопка dynamic id не кликабельна.'
 
     @allure.title("Атрибут id у dynamic id button генерируется автоматически")

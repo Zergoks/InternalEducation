@@ -11,7 +11,7 @@ from Core.utils import explicit_sleep as sleep
 
 class TestHiddenLayersPage:
 
-    #TDD is_displayed() показывает, что зеленая кнопка есть после нажатия на неё. скрыто в доме следующим уровнем
+    # TDD is_displayed() показывает, что зеленая кнопка есть после нажатия на неё. скрыто в доме следующим уровнем
 
     @allure.title("Зеленая кнопка после первого нажатия не видна на UI")
     def test_blue_button_is_not_visible_after_click(self, driver):
@@ -22,4 +22,4 @@ class TestHiddenLayersPage:
         sleep(1)
         hidden_layer_page.click_on_green_button()
         with allure.step("Проверям, что зеленая кнопка после нажатия не видна на UI"):
-            assert hidden_layer_page.is_element_visible(*hidden_layer_page.greenButton) is True, 'Visible'
+            assert hidden_layer_page.is_element_visible(hidden_layer_page.greenButton) is True, 'Visible'

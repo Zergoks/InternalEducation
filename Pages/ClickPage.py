@@ -14,4 +14,4 @@ class ClickPage(BasePage):
 
     @allure.step("Нажимаем на Bad button")
     def click_on_bad_button(self):
-        self.click_on_element(*self.BadButton)
+        self.click_on_element(self.BadButton)

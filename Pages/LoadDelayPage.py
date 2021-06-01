@@ -13,4 +13,4 @@ class LoadDelayPage(BasePage):
 
     @allure.step("Нажимаем на blue button")
     def click_on_appearing_after_delay_button(self):
-        self.click_on_element(*self.AppearingAfterDelayButton)
+        self.click_on_element(self.AppearingAfterDelayButton)

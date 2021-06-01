@@ -15,5 +15,4 @@ class AJAXDataPage(BasePage):
 
     @allure.step("Нажимаем на Triggering AJAX button")
     def click_on_triggering_ajax_button(self):
-        self.click_on_element(*self.TriggeringAJAXButton)
-
+        self.click_on_element(self.TriggeringAJAXButton)

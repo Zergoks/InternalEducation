@@ -1,5 +1,5 @@
 import allure
-import pytest
+
 from Pages.HomePage import HomePage
 
 

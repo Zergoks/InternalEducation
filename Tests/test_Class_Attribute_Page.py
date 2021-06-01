@@ -1,7 +1,4 @@
-from time import sleep
-
 import allure
-import pytest
 
 from Pages.HomePage import HomePage
 from Pages.ClassAttributePage import ClassAttributePage
@@ -40,7 +37,7 @@ class TestClassAttributePage:
         home_page.go_to_home_page()
         home_page.go_to_class_attribute_page()
         with allure.step("Проверяем, что кнопка кликабельна"):
-            assert class_attribute_page.is_element_visible(*ClassAttributePage.BlueButton) is True, \
+            assert class_attribute_page.is_element_visible(ClassAttributePage.BlueButton) is True, \
                 "Blue button не кликабельна"
 
     @allure.feature("Blue button")
@@ -94,7 +91,7 @@ class TestClassAttributePage:
         home_page.go_to_home_page()
         home_page.go_to_class_attribute_page()
         with allure.step("Проверяем, что кнопка кликабельна"):
-            assert class_attribute_page.is_element_visible(*ClassAttributePage.GreenButton) is True, \
+            assert class_attribute_page.is_element_visible(ClassAttributePage.GreenButton) is True, \
                 "Green button не кликабельна"
 
     @allure.feature("Orange button")
@@ -106,5 +103,5 @@ class TestClassAttributePage:
         home_page.go_to_home_page()
         home_page.go_to_class_attribute_page()
         with allure.step("Проверяем, что кнопка кликабельна"):
-            assert class_attribute_page.is_element_visible(*ClassAttributePage.OrangeButton) is True, \
+            assert class_attribute_page.is_element_visible(ClassAttributePage.OrangeButton) is True, \
                 "Orange button не кликабельна"

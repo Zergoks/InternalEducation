@@ -14,8 +14,8 @@ class TextInput(BasePage):
 
     @allure.step("Нажимаем на Updating button")
     def click_on_updating_button(self):
-        self.click_on_element(*self.UpdatingButton)
+        self.click_on_element(self.UpdatingButton)
 
     @allure.step("Вводим текст в поле для задания нового имени кнопке")
     def input_text_in_text_field(self, text):
-        self.send_keys_to(text, *self.TextInputField)
+        self.send_keys_to(text, self.TextInputField)
