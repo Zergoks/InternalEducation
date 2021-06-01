@@ -8,10 +8,14 @@ def get_project_root() -> Path:
     return Path(__file__).parent.parent
 
 
-def random_string_mix(string_length):
-    """Генерируем стрингу с миксом букв и символов """
+def list_of_random_strings(amount_of_strings: int) -> list:
+    """Генерируем лист с стрингами"""
+    result = []
     letters = string.ascii_letters + string.digits
-    return ''.join(random.choice(letters) for i in range(string_length))
+    for time in range(amount_of_strings):
+        result.append(''.join(random.choice(letters) for i in range(random.randint(1, 100))))
+    return result
+
 
 def explicit_sleep(time=1):
     """Вынесено в отдельную функцию чтобы было проще рефакторить,
