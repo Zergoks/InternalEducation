@@ -11,7 +11,6 @@ from Core.utils import explicit_sleep as sleep
 class TestTextInputPage:
 
     @allure.title("После заполнения текстового поля и нажатия кнопки изменяется название кнопки")
-    @pytest.mark.test
     def test_button_name_is_changed_after_click(self, driver, generated_mix_string):
         home_page = HomePage(driver)
         text_input_page = TextInput(driver)

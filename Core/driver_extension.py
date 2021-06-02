@@ -122,15 +122,12 @@ class DriverCustom:
         return False
 
     def is_element_visible(self, locator_model: tuple, timeout=10):
-        locator, by_type = locator_model
-        try:
-            wait = WebDriverWait(self.driver, timeout)
-            wait.until(ec.visibility_of_element_located((by_type, locator)))
-            logger.info(f"Element {locator} with and locatorType: {by_type} is visible")
-            return True
-        except TimeoutException:
-            logger.info(f"Element {locator} with and locatorType: {by_type} is not visible")
-            return False
+        element = self.get_element(locator_model, timeout)
+        if element.is_displayed():
+            logger.info(f"Element with locator_model {locator_model} is visible")
+        else:
+            logger.info(f"Element with locator_model {locator_model} is not visible")
+        return element.is_displayed()
 
     def is_alert_present(self, timeout=10) -> bool:
         wait = WebDriverWait(self.driver, timeout)
