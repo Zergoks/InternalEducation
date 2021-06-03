@@ -142,3 +142,9 @@ class DriverCustom:
     def switch_to_alert(self):
         logger.info("switch to alert")
         return self.driver.switch_to.alert
+
+    def get_element_text(self, locator_model) -> str:
+        element = self.get_element(locator_model)
+        text = element.text
+        logger.info(f"Element with locator_model: {locator_model} and text: {text}")
+        return text
