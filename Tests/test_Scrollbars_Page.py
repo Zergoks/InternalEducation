@@ -8,10 +8,9 @@ from Core.utils import sleep
 
 
 @allure.suite("Scrollbars Page UI")
-class TestMainPage:
+class TestScrollbarsPage:
 
     @allure.title("У Main page корректный title")
-    @pytest.mark.test
     def test_home_page_title_is_correct(self, driver):
         home_page = HomePage(driver)
         scrollbars_page = ScrollbarsPage(driver)
