@@ -12,7 +12,6 @@ import logging
 from pathlib import Path
 from Core.utils import list_of_random_strings
 
-
 PATH_TO_GECKODRIVER = 'Core/drivers/geckodriver.exe'
 AMOUNT_RANDOM_STRINGS = 3
 
@@ -26,6 +25,8 @@ def pytest_addoption(parser):
     parser.addoption("--headless", action="store", default=False)
     parser.addoption("--env", action="store", default="test")
     parser.addoption("--log_level", action="store", default="INFO")
+    parser.addoption("--remote", action="store", default=False)
+    parser.addoption("--hub", action="store", default="localhost")
 
 
 @pytest.fixture()
@@ -37,14 +38,20 @@ def environment(request):
 def config(request):
     browser = request.config.getoption("--browser")
     version = request.config.getoption("--browser_ver")
+    hub = request.config.getoption("--hub")
     headless = False
+    remote = False
     if request.config.getoption("--headless"):
         headless = True
+    if request.config.getoption("--remote"):
+        remote = True
 
     return {
         "version": version,
         "browser": browser,
         "headless": headless,
+        "remote": remote,
+        "hub": hub
     }
 
 
@@ -73,6 +80,19 @@ def create_local_driver(config):
     return driver
 
 
+def create_remote_driver(config):
+    if config["browser"] == "chrome":
+        options = get_chrome_options(config)
+    else:
+        options = get_firefox_options(config)
+    capabilities = {"version": config["version"],
+                    "acceptInsecureCerts": True,
+                    "screenResolution": "1280x1024x24"}
+    return webdriver.Remote(command_executor="http://{}:4444/wd/hub".format(config["hub"]),
+                            options=options,
+                            desired_capabilities=capabilities)
+
+
 # @pytest.fixture(scope="function")
 # def driver(request, config):
 #     """Вариант проброса драйвера через request.addfinalizer и return"""
@@ -93,14 +113,16 @@ def create_local_driver(config):
 @pytest.fixture()
 def driver(request, config):
     """Вариант проброса драйвера через yield"""
-    driver = create_local_driver(config)
-    request.instance.driver = driver
-    driver.delete_all_cookies()
-    driver.set_window_size(1920, 1080)
-    driver.implicitly_wait(3)
+    if config["remote"]:
+        driver = create_remote_driver(config)
+    else:
+        driver = create_local_driver(config)
+        request.instance.driver = driver
+        driver.delete_all_cookies()
+        driver.set_window_size(1920, 1080)
+        driver.implicitly_wait(3)
     yield driver
     driver.quit()
-
 
 
 @pytest.fixture(scope='function', params=string_generator)
