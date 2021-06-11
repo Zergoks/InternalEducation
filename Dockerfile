@@ -4,8 +4,8 @@ FROM python:3.9.5-buster
 #    && echo "deb http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google.list
 #RUN apt-get update && apt-get -y install google-chrome-stable
 
-RUN echo 'nameserver 8.8.8.8'>/etc/resolv.conf
-RUN ping pypi.org -n 10
+#RUN echo 'nameserver 8.8.8.8'>/etc/resolv.conf
+#RUN ping pypi.org -n 10
 
 RUN mkdir -p /user/src/app/
 WORKDIR /usr/src/app/
