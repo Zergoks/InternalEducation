@@ -16,7 +16,7 @@ Eel==0.12.4
 execnet==1.7.1
 Faker==4.1.2
 future==0.18.2
-gevent==21.1.2
+gevent==21.1.1
 gevent-websocket==0.10.1
 greenlet==1.0.0
 idna==2.10
