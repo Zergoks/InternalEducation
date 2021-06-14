@@ -7,7 +7,7 @@ pipeline {
                 }
             steps {
                 sh 'docker network create grid'
-                sh 'docker-compose -f docker-compose.yml up'
+                sh 'docker compose -f docker-compose.yml up'
             }
         }
         stage('build python') {
