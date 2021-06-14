@@ -3,8 +3,8 @@ import sys
 import allure
 import pytest
 from selenium import webdriver
-from selenium.webdriver import ChromeOptions
-from selenium.webdriver import FirefoxOptions
+from selenium.webdriver import ChromeOptions, FirefoxOptions
+from msedge.selenium_tools import Edge, EdgeOptions
 from webdriver_manager.chrome import ChromeDriverManager
 from webdriver_manager.firefox import GeckoDriverManager
 from loguru import logger
@@ -67,6 +67,13 @@ def get_firefox_options(config):
     return options
 
 
+def get_edge_option(config):
+    options = EdgeOptions()
+    options.use_chromium = True
+    options.headless = config["headless"]
+    return options
+
+
 def create_local_driver(config):
     driver = None
     if config["browser"] == "chrome":
@@ -83,13 +90,15 @@ def create_local_driver(config):
 def create_remote_driver(config):
     if config["browser"] == "chrome":
         options = get_chrome_options(config)
+        options.add_argument("--no-sandbox")  # bypass OS security model
         options.add_argument("--disable-dev-shm-usage")  # overcome limited resource problems
         # options.add_argument("--start-maximized")  # open Browser in maximized mode
-        # options.add_argument("--no-sandbox")  # bypass OS security model
         # options.add_experimental_option("excludeSwitches", ["enable-automation"])
         # options.add_experimental_option('useAutomationExtension', False)
-    else:
+    elif config["browser"] == "firefox" or "ff":
         options = get_firefox_options(config)
+    elif config["browser"] == "edge" or "MicrosoftEdge":
+        options = get_edge_option(config)
     capabilities = {"version": config["version"],
                     "acceptInsecureCerts": True,
                     "screenResolution": "1280x1024x24"}
