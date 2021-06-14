@@ -74,7 +74,7 @@ def create_local_driver(config):
         options = get_chrome_options(config)
         driver = webdriver.Chrome(executable_path=driver_manager.install(), options=options)
     elif config["browser"] == "firefox" or "ff":
-        # driver_manager = GeckoDriverManager("82.0")
+        driver_manager = GeckoDriverManager("82.0")
         options = get_firefox_options(config)
         driver = webdriver.Firefox(executable_path='Core/drivers/geckodriver.exe', options=options)
     return driver
@@ -83,6 +83,11 @@ def create_local_driver(config):
 def create_remote_driver(config):
     if config["browser"] == "chrome":
         options = get_chrome_options(config)
+        options.add_argument("--disable-dev-shm-usage")  # overcome limited resource problems
+        # options.add_argument("--start-maximized")  # open Browser in maximized mode
+        # options.add_argument("--no-sandbox")  # bypass OS security model
+        # options.add_experimental_option("excludeSwitches", ["enable-automation"])
+        # options.add_experimental_option('useAutomationExtension', False)
     else:
         options = get_firefox_options(config)
     capabilities = {"version": config["version"],
