@@ -16,11 +16,14 @@ pipeline {
                 }
             steps {
                 sh 'docker build -t python_test:latest .'
+                sh 'docker run --name python-cont --network jenkins python_test:latest'
             }
         }
         stage('run tests') {
             steps {
-                sh 'pytest --remote=True --hub=localhost --browser=ff'}}
+               // sh 'docker exec [OPTIONS] CONTAINER COMMAND [ARG...]'
+                sh 'docker exec -ti '
+               // sh 'pytest --remote=True --hub=localhost --browser=ff'}}
     }
         post {
             always {
