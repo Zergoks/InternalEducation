@@ -22,4 +22,9 @@ pipeline {
             steps {
                 sh 'pytest --remote=True --hub=localhost --browser=ff'}}
     }
+        post {
+            always {
+                sh 'docker network rm grid'
+                }
+            }
 }
