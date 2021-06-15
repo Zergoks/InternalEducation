@@ -31,6 +31,7 @@ pipeline {
         post {
             always {
                 sh 'docker network rm grid'
+                sh 'docker rm python-cont'
                 }
             }
 }
