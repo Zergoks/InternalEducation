@@ -23,7 +23,7 @@ pipeline {
         stage('run tests') {
             steps {
                // sh 'docker exec [OPTIONS] CONTAINER COMMAND [ARG...]'
-                sh 'docker exec -ti '
+                sh 'docker exec -ti pytest --remote=True --hub=localhost --browser=ff'
                // sh 'pytest --remote=True --hub=localhost --browser=ff'}}
     }
         post {
