@@ -17,6 +17,7 @@ pipeline {
             steps {
                 sh 'docker build -t python_test:latest .'
                 sh 'docker run --name python-cont --network jenkins python_test:latest'
+                sh 'docker exec -ti python-cont pip install --no-cache-dir -r requirements.txt'
             }
         }
         stage('run tests') {
