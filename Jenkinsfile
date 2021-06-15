@@ -17,8 +17,8 @@ pipeline {
             steps {
                 sh 'docker build -t python_test:latest .'
                 sh 'docker ps -a'
-                sh 'docker run --name python-cont python_test:latest'
-                sh 'docker ps -a & sleep 30'
+                sh 'docker run --detach --name python-cont python_test:latest'
+                sh 'docker ps -a & sleep 10'
                 sh 'docker exec python-cont pip install --no-cache-dir -r requirements.txt'
             }
         }
