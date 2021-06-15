@@ -17,7 +17,7 @@ pipeline {
             steps {
                 sh 'docker build -t python_test:latest .'
                 sh 'docker run --name python-cont python_test:latest'
-                sh 'docker exec -ti python-cont pip install --no-cache-dir -r requirements.txt'
+                sh 'docker exec python-cont pip install --no-cache-dir -r requirements.txt'
             }
         }
         stage('run tests') {
