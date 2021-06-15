@@ -17,5 +17,5 @@ COPY requirements.txt ./
 COPY . .
 
 #CMD ["pytest", "-m test"]
-
+CMD ["ls"]
 
