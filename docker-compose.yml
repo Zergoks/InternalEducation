@@ -4,6 +4,9 @@
 # To stop the execution, hit Ctrl+C, and then `docker-compose -f docker-compose-v2.yml down`
 version: '2'
 services:
+  python-cont:
+    build: ./
+
   chrome:
     image: selenium/node-chrome:4.0.0-beta-4-20210608
     volumes:
@@ -49,6 +52,3 @@ services:
       - "4442:4442"
       - "4443:4443"
       - "4444:4444"
-
-  python-cont:
-    build: ./
