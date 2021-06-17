@@ -8,7 +8,7 @@ services:
     build: ./
     container_name: python-cont
     volumes:
-    - D:/jenkins/allure-report-cont/:/usr/src/app/allure-report/
+      - D:/jenkins/allure-report-cont/:/usr/src/app/allure-report/
 
   chrome:
     image: selenium/node-chrome:4.0.0-beta-4-20210608
