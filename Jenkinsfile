@@ -12,8 +12,8 @@ pipeline {
         }
         stage('run tests') {
             steps {
-                sh 'docker exec python-cont pytest -n 3 -m test --remote=True --hub=selenium-hub --browser=ff &'
-                sh 'docker exec python-cont pytest -n 3 -m test --remote=True --hub=selenium-hub --browser=edge'
+                sh 'docker exec python-cont pytest -n 3 -m test --remote=True --hub=selenium-hub --browser=ff --alluredir=/allure-report &'
+                sh 'docker exec python-cont pytest -n 3 -m test --remote=True --hub=selenium-hub --browser=edge --alluredir=/allure-report'
 			}
 		}
     }
