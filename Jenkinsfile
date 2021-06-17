@@ -12,7 +12,7 @@ pipeline {
         }
         stage('run tests') {
             steps {
-                sh 'docker exec -ti pytest python-cont --remote=True --hub=selenium-hub --browser=ff'
+                sh 'docker exec -ti python-cont pytest --remote=True --hub=selenium-hub --browser=ff'
 			}
 		}
     }
