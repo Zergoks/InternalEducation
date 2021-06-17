@@ -4,8 +4,9 @@
 # To stop the execution, hit Ctrl+C, and then `docker-compose -f docker-compose-v2.yml down`
 version: '2'
 services:
-  python-cont:
+  python:
     build: ./
+    container_name: python-cont
 
   chrome:
     image: selenium/node-chrome:4.0.0-beta-4-20210608
@@ -48,6 +49,8 @@ services:
 
   selenium-hub:
     image: selenium/hub:4.0.0-beta-4-20210608
+    depends_on:
+      - python-cont
     ports:
       - "4442:4442"
       - "4443:4443"
