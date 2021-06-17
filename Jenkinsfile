@@ -19,6 +19,12 @@ pipeline {
     }
         post {
             always {
+                allure ([
+                            includeProperties: false,
+                            jdk: '',
+                            reportBuildPolicy: 'ALWAYS',
+                            results: [[path: '/allure-report']]
+                            ])
                 sh 'docker network rm grid'
                 sh 'docker-compose down --remove-orphans'
                 }
