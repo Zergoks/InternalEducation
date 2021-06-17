@@ -12,7 +12,8 @@ pipeline {
         }
         stage('run tests') {
             steps {
-                sh 'docker exec python-cont pytest --remote=True --hub=selenium-hub --browser=ff'
+                sh 'docker exec python-cont pytest -m test --remote=True --hub=selenium-hub --browser=ff'
+                sh 'docker exec python-cont pytest -m test --remote=True --hub=selenium-hub --browser=edge'
 			}
 		}
     }
