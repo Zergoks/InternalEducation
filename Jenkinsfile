@@ -20,6 +20,7 @@ pipeline {
         post {
             always {
                 sh 'docker network rm grid'
+                sh 'docker-compose down --remove-orphans'
                 }
             }
 }
