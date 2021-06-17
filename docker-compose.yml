@@ -50,5 +50,5 @@ services:
       - "4443:4443"
       - "4444:4444"
 
-  python:
+  python-cont:
     build: ./
