@@ -12,8 +12,8 @@ pipeline {
         }
         stage('run tests') {
             steps {
-                sh 'docker exec python-cont pytest -n 3 -m test --remote=True --hub=selenium-hub --browser=ff --alluredir=/allure-report &'
-                sh 'docker exec python-cont pytest -n 3 -m test --remote=True --hub=selenium-hub --browser=edge --alluredir=/allure-report'
+                sh 'docker exec python-cont pytest -m test --remote=True --hub=selenium-hub --browser=ff --alluredir=/var/jenkins_home/allure-report &'
+                sh 'docker exec python-cont pytest -m test --remote=True --hub=selenium-hub --browser=edge --alluredir=/var/jenkins_home/allure-report'
 			}
 		}
     }
@@ -23,7 +23,7 @@ pipeline {
                             includeProperties: false,
                             jdk: '',
                             reportBuildPolicy: 'ALWAYS',
-                            results: [[path: '/allure-report']]
+                            results: [[path: '/var/jenkins_home/allure-report']]
                             ])
                 sh 'docker network rm grid'
                 sh 'docker-compose down --remove-orphans'
