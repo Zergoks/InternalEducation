@@ -25,14 +25,12 @@ class DriverExtension:
         """Developed for taking custom screenshot"""
         file_name = str(round(time.time() * 1000)) + ".png"
         path_to_save = get_project_root() / "Reports" / "Screenshots"
-        try:
-            if not path_to_save.is_dir():
-                path_to_save.mkdir()
-            self.driver.save_screenshot(str(path_to_save / file_name))
+        if not path_to_save.is_dir():
+            path_to_save.mkdir()
+        if self.driver.save_screenshot(str(path_to_save / file_name)):
             logger.info(f"Screenshot save to directory: {str(path_to_save)}. Name: {file_name}")
-        except:
+        else:
             logger.error("### Exception Occurred when taking screenshot")
-            raise
 
     def get_element(self, locator_model: tuple, timeout: Union[int, float] = 10) -> WebElement:
         element = None
