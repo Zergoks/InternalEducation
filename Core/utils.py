@@ -9,7 +9,7 @@ def get_project_root() -> Path:
 
 
 def list_of_random_strings(amount_of_strings: int) -> list:
-    """Генерируем лист с стрингами"""
+    """Generate list with string of ascii_letters+digits"""
     result = []
     letters = string.ascii_letters + string.digits
     for time in range(amount_of_strings):
@@ -18,6 +18,6 @@ def list_of_random_strings(amount_of_strings: int) -> list:
 
 
 def explicit_sleep(time=1):
-    """Вынесено в отдельную функцию чтобы было проще рефакторить,
-    когда будет понятно решение проблемы"""
+    """Used as reference for issue with waiting for element to be clickable.
+    Look at github: Having time. sleep() for debugging in the merged project code - not good practice #11"""
     sleep(time)
