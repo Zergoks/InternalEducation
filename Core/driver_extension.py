@@ -13,7 +13,7 @@ from Core.utils import get_project_root
 import time
 
 
-class DriverCustom:
+class DriverExtension:
 
     def __init__(self, driver):
         self.driver = driver
