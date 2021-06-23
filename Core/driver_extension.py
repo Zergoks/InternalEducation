@@ -5,9 +5,10 @@ from typing import Union, List
 
 from loguru import logger
 from selenium.webdriver.support.ui import WebDriverWait
-from selenium.common.exceptions import *
 from selenium.webdriver.support import expected_conditions as ec
 from selenium.webdriver.remote.webdriver import WebElement
+from selenium.common.exceptions import TimeoutException, NoSuchElementException, ElementNotVisibleException,\
+    ElementNotSelectableException, ElementNotInteractableException
 
 from Core.utils import get_project_root
 import time
