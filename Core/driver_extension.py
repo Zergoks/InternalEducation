@@ -6,7 +6,7 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as ec
 from selenium.webdriver.remote.webdriver import WebElement
 from selenium.common.exceptions import TimeoutException, NoSuchElementException, ElementNotVisibleException,\
-    ElementNotSelectableException, ElementNotInteractableException
+    ElementNotSelectableException, ElementNotInteractableException, JavascriptException
 
 from Core.utils import get_project_root
 import time
@@ -94,7 +94,7 @@ class DriverExtension:
             element = self.get_element(locator_model)
             self.driver.execute_script("arguments[0].scrollIntoView();", element)
             logger.info(f"Scrolled to element with locator_model: {locator_model}")
-        except:
+        except JavascriptException:
             logger.exception(f"Can't be scrolled to element with locator_model: {locator_model}")
 
     def click_on_element(self, locator_model: tuple) -> None:
