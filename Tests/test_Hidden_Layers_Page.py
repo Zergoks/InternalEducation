@@ -11,7 +11,7 @@ from Core.utils import explicit_sleep as sleep
 
 class TestHiddenLayersPage:
 
-    # TDD is_displayed() показывает, что зеленая кнопка есть после нажатия на неё. скрыто в доме следующим уровнем
+    # TDD is_displayed() return True but green button is hidden by another element in DOM
 
     @allure.title("Зеленая кнопка после первого нажатия не видна на UI")
     # @pytest.mark.test

@@ -1,5 +1,3 @@
-# TODO 3: wait_for_element_to_be_clickable может вынести фикстурой? или отельную фикстуру на ожидания
-
 from abc import abstractmethod
 from typing import Union, List
 
@@ -23,8 +21,7 @@ class DriverCustom:
         pass
 
     def screen_shot(self, result_message: str = None):
-        """Делаем скриншот ui В произвольном месте
-        Авто скриншот вынесен в conftest.py на фейлы с аттачем к аллюру"""
+        """Developed for taking custom screenshot"""
         file_name = str(round(time.time() * 1000)) + ".png"
         path_to_save = get_project_root() / "Reports" / "Screenshots"
         try:

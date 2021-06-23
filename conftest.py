@@ -127,7 +127,7 @@ def create_remote_driver(config):
 
 @pytest.fixture()
 def driver(request, config):
-    """Вариант проброса драйвера через yield"""
+    """Create driver with yield"""
     if config["remote"]:
         driver = create_remote_driver(config)
     else:
@@ -147,7 +147,7 @@ def generated_mix_string(request):
 
 @pytest.hookimpl(hookwrapper=True, tryfirst=True)
 def pytest_runtest_makereport(item):
-    """Скриншот при падении теста с аттачем к allure"""
+    """Attach screenshot to allure results if test failed"""
     outcome = yield
     rep = outcome.get_result()
     # marker = item.get_closest_marker("ui")
@@ -164,6 +164,7 @@ def pytest_runtest_makereport(item):
 
 @pytest.fixture(autouse=True)
 def create_log_file(request):
+    """Create log files. By default log file only for errors created"""
     log_level = request.config.getoption("--log_level")
 
     path_to_logs = Path.cwd() / "Reports" / "Logs"
