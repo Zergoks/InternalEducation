@@ -118,12 +118,6 @@
     entry: detect-private-key
     language: python
     types: [text]
--   id: double-quote-string-fixer
-    name: Fix double quoted strings
-    description: This hook replaces double quoted strings with single quoted strings
-    entry: double-quote-string-fixer
-    language: python
-    types: [python]
 -   id: end-of-file-fixer
     name: Fix End of Files
     description: Ensures that a file is either empty, or ends with one newline.
