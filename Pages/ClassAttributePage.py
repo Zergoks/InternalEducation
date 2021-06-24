@@ -1,9 +1,10 @@
 import allure
-
-from Pages.BasePage import BasePage
-from Core.ui_text import ClassAttributePage as Text
 import loguru
 from selenium.webdriver.common.by import By
+
+from Core.ui_text import ClassAttributePage as Text
+from Pages.BasePage import BasePage
+
 
 class ClassAttributePage(BasePage):
     BlueButton = (".btn-primary", By.CSS_SELECTOR)
@@ -12,8 +13,8 @@ class ClassAttributePage(BasePage):
 
     def __init__(self, driver):
         super().__init__(driver)
-        self.url = '/classattr'
-        self.title = 'Class Attribute'
+        self.url = "/classattr"
+        self.title = "Class Attribute"
         self.text = Text
 
     @allure.step("Нажимаем на blue button")

@@ -1,3 +1,3 @@
 ClassAttributePage = dict(
-    BlueButtonAlertText="Primary button pressed"
+    BlueButtonAlertText="Primary button pressed",
 )

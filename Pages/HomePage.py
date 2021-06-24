@@ -1,31 +1,32 @@
 import allure
 import loguru
 from selenium.webdriver.common.by import By
+
 from Pages.BasePage import BasePage
 
 
 class HomePage(BasePage):
-    DynamicIdLink = ('(//h3/a)[1]', By.XPATH)
-    ClassAttributeLink = ('(//h3/a)[2]', By.XPATH)
-    HiddenLayersLink = ('(//h3/a)[3]', By.XPATH)
-    LoadDelayLink = ('(//h3/a)[4]', By.XPATH)
-    AJAXDataLink = ('(//h3/a)[5]', By.XPATH)
-    ClientSideDelayLink = ('(//h3/a)[6]', By.XPATH)
-    ClickLink = ('(//h3/a)[7]', By.XPATH)
-    TextInputLink = ('(//h3/a)[8]', By.XPATH)
-    ScrollbarsLink = ('(//h3/a)[9]', By.XPATH)
-    DynamicTableLink = ('(//h3/a)[10]', By.XPATH)
-    VerifyTextLink = ('(//h3/a)[11]', By.XPATH)
-    ProgressBarLink = ('(//h3/a)[12]', By.XPATH)
-    VisibilityLink = ('(//h3/a)[13]', By.XPATH)
-    SampleAppLink = ('(//h3/a)[14]', By.XPATH)
-    MouseOverLink = ('(//h3/a)[15]', By.XPATH)
-    NonBreakingSpaceLink = ('(//h3/a)[16]', By.XPATH)
+    DynamicIdLink = ("(//h3/a)[1]", By.XPATH)
+    ClassAttributeLink = ("(//h3/a)[2]", By.XPATH)
+    HiddenLayersLink = ("(//h3/a)[3]", By.XPATH)
+    LoadDelayLink = ("(//h3/a)[4]", By.XPATH)
+    AJAXDataLink = ("(//h3/a)[5]", By.XPATH)
+    ClientSideDelayLink = ("(//h3/a)[6]", By.XPATH)
+    ClickLink = ("(//h3/a)[7]", By.XPATH)
+    TextInputLink = ("(//h3/a)[8]", By.XPATH)
+    ScrollbarsLink = ("(//h3/a)[9]", By.XPATH)
+    DynamicTableLink = ("(//h3/a)[10]", By.XPATH)
+    VerifyTextLink = ("(//h3/a)[11]", By.XPATH)
+    ProgressBarLink = ("(//h3/a)[12]", By.XPATH)
+    VisibilityLink = ("(//h3/a)[13]", By.XPATH)
+    SampleAppLink = ("(//h3/a)[14]", By.XPATH)
+    MouseOverLink = ("(//h3/a)[15]", By.XPATH)
+    NonBreakingSpaceLink = ("(//h3/a)[16]", By.XPATH)
 
     def __init__(self, driver):
         super().__init__(driver)
-        self.url = '/home'
-        self.title = 'UI Test Automation Playground'
+        self.url = "/home"
+        self.title = "UI Test Automation Playground"
 
     @allure.step("Переходим на страницу dynamic id")
     def go_to_dynamic_id_page(self):

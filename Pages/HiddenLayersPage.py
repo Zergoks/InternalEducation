@@ -1,8 +1,9 @@
 import allure
 import pytest
+from selenium.webdriver.common.by import By
 
 from Pages.BasePage import BasePage
-from selenium.webdriver.common.by import By
+
 
 class HiddenLayerPage(BasePage):
     greenButton = ('//*[@id="greenButton"]', By.XPATH)
@@ -10,8 +11,8 @@ class HiddenLayerPage(BasePage):
 
     def __init__(self, driver):
         super().__init__(driver)
-        self.url = '/hiddenlayers'
-        self.title = 'Hidden Layers'
+        self.url = "/hiddenlayers"
+        self.title = "Hidden Layers"
 
     @allure.step("Нажимаем на зеленую кнопку")
     def click_on_green_button(self):

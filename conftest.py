@@ -1,26 +1,33 @@
+import logging
 import sys
+from pathlib import Path
 
 import allure
 import pytest
+from loguru import logger
+from msedge.selenium_tools import Edge
+from msedge.selenium_tools import EdgeOptions
 from selenium import webdriver
-from selenium.webdriver import ChromeOptions, FirefoxOptions
-from msedge.selenium_tools import Edge, EdgeOptions
+from selenium.webdriver import ChromeOptions
+from selenium.webdriver import FirefoxOptions
 from webdriver_manager.chrome import ChromeDriverManager
 from webdriver_manager.firefox import GeckoDriverManager
-from loguru import logger
-import logging
-from pathlib import Path
+
 from Core.utils import list_of_random_strings
 
-PATH_TO_GECKODRIVER = 'Core/drivers/geckodriver.exe'
+PATH_TO_GECKODRIVER = "Core/drivers/geckodriver.exe"
 AMOUNT_RANDOM_STRINGS = 3
 
 string_generator = list_of_random_strings(AMOUNT_RANDOM_STRINGS)
 
 
 def pytest_addoption(parser):
-    parser.addoption("--browser", action="store", default="chrome",
-                     help="Choose browser: chrome or firefox")
+    parser.addoption(
+        "--browser",
+        action="store",
+        default="chrome",
+        help="Choose browser: chrome or firefox",
+    )
     parser.addoption("--browser_ver", action="store", default="")
     parser.addoption("--headless", action="store", default=False)
     parser.addoption("--env", action="store", default="test")
@@ -31,7 +38,7 @@ def pytest_addoption(parser):
 
 @pytest.fixture()
 def environment(request):
-    yield request.config.getoption('--env')
+    yield request.config.getoption("--env")
 
 
 @pytest.fixture()
@@ -51,7 +58,7 @@ def config(request):
         "browser": browser,
         "headless": headless,
         "remote": remote,
-        "hub": hub
+        "hub": hub,
     }
 
 
@@ -79,11 +86,17 @@ def create_local_driver(config):
     if config["browser"] == "chrome":
         driver_manager = ChromeDriverManager()
         options = get_chrome_options(config)
-        driver = webdriver.Chrome(executable_path=driver_manager.install(), options=options)
+        driver = webdriver.Chrome(
+            executable_path=driver_manager.install(),
+            options=options,
+        )
     elif config["browser"] == "firefox" or "ff":
         driver_manager = GeckoDriverManager("82.0")
         options = get_firefox_options(config)
-        driver = webdriver.Firefox(executable_path='Core/drivers/geckodriver.exe', options=options)
+        driver = webdriver.Firefox(
+            executable_path="Core/drivers/geckodriver.exe",
+            options=options,
+        )
     return driver
 
 
@@ -91,7 +104,9 @@ def create_remote_driver(config):
     if config["browser"] == "chrome":
         options = get_chrome_options(config)
         options.add_argument("--no-sandbox")  # bypass OS security model
-        options.add_argument("--disable-dev-shm-usage")  # overcome limited resource problems
+        options.add_argument(
+            "--disable-dev-shm-usage",
+        )  # overcome limited resource problems
         options.add_argument("--disable-gpu")
         # options.add_argument("--start-maximized")  # open Browser in maximized mode
         # options.add_experimental_option("excludeSwitches", ["enable-automation"])
@@ -100,12 +115,16 @@ def create_remote_driver(config):
         options = get_firefox_options(config)
     elif config["browser"] == "edge" or "MicrosoftEdge":
         options = get_edge_option(config)
-    capabilities = {"version": config["version"],
-                    "acceptInsecureCerts": True,
-                    "screenResolution": "1280x1024x24"}
-    return webdriver.Remote(command_executor="http://{}:4444/wd/hub".format(config["hub"]),
-                            options=options,
-                            desired_capabilities=capabilities)
+    capabilities = {
+        "version": config["version"],
+        "acceptInsecureCerts": True,
+        "screenResolution": "1280x1024x24",
+    }
+    return webdriver.Remote(
+        command_executor="http://{}:4444/wd/hub".format(config["hub"]),
+        options=options,
+        desired_capabilities=capabilities,
+    )
 
 
 # @pytest.fixture(scope="function")
@@ -140,7 +159,7 @@ def driver(request, config):
     driver.quit()
 
 
-@pytest.fixture(scope='function', params=string_generator)
+@pytest.fixture(scope="function", params=string_generator)
 def generated_mix_string(request):
     yield request.param
 
@@ -152,11 +171,15 @@ def pytest_runtest_makereport(item):
     rep = outcome.get_result()
     # marker = item.get_closest_marker("ui")
     # if marker:
-    if rep.when == "call" and rep.failed:  # we only look at actual failing test calls, not setup/teardown
+    if (
+        rep.when == "call" and rep.failed
+    ):  # we only look at actual failing test calls, not setup/teardown
         try:
-            allure.attach(item.instance.driver.get_screenshot_as_png(),
-                          name=item.name,
-                          attachment_type=allure.attachment_type.PNG)
+            allure.attach(
+                item.instance.driver.get_screenshot_as_png(),
+                name=item.name,
+                attachment_type=allure.attachment_type.PNG,
+            )
         except Exception as e:
             print(e)
             logger.error("screenshot failed")
@@ -168,14 +191,20 @@ def create_log_file(request):
     log_level = request.config.getoption("--log_level")
 
     path_to_logs = Path.cwd() / "Reports" / "Logs"
-    if log_level == 'DEBUG':
-        logger.add(path_to_logs / "{time}_debug.log",
-                   level=logging.DEBUG,
-                   format="{level}: {message}")
-    if log_level == 'INFO':
-        logger.add(path_to_logs / "{time}_info.log",
-                   level=logging.INFO,
-                   format="{level}: {message}")
+    if log_level == "DEBUG":
+        logger.add(
+            path_to_logs / "{time}_debug.log",
+            level=logging.DEBUG,
+            format="{level}: {message}",
+        )
+    if log_level == "INFO":
+        logger.add(
+            path_to_logs / "{time}_info.log",
+            level=logging.INFO,
+            format="{level}: {message}",
+        )
 
-    logger.add(path_to_logs / "{time}_error.log",
-               level=logging.ERROR)
+    logger.add(
+        path_to_logs / "{time}_error.log",
+        level=logging.ERROR,
+    )

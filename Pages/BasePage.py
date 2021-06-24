@@ -1,7 +1,8 @@
 import allure
 from loguru import logger
-from Core.driver_extension import DriverExtension
 from selenium.webdriver.common.by import By
+
+from Core.driver_extension import DriverExtension
 
 
 class Header(DriverExtension):
@@ -36,11 +37,10 @@ class Footer(DriverExtension):
 
 
 class BasePage(DriverExtension):
-
     def __init__(self, driver, has_header=True, has_footer=True):
         super().__init__(driver)
-        self.base_url = 'http://uitestingplayground.com'
-        self.url = '/'
+        self.base_url = "http://uitestingplayground.com"
+        self.url = "/"
 
         if has_header:
             self.header = Header(driver)
@@ -57,7 +57,7 @@ class BasePage(DriverExtension):
 
     @allure.step("Обновляем страницу")
     def refresh_page(self):
-        logger.info(f"refresh page")
+        logger.info("refresh page")
         self.driver.refresh()
 
     @allure.step("Подтверждаем alert")

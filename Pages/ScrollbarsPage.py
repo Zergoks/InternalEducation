@@ -1,7 +1,7 @@
 import allure
+from selenium.webdriver.common.by import By
 
 from Pages.BasePage import BasePage
-from selenium.webdriver.common.by import By
 
 
 class ScrollbarsPage(BasePage):
@@ -9,8 +9,8 @@ class ScrollbarsPage(BasePage):
 
     def __init__(self, driver):
         super().__init__(driver)
-        self.url = '/scrollbars'
-        self.title = 'Scrollbars'
+        self.url = "/scrollbars"
+        self.title = "Scrollbars"
 
     @allure.step("Нажимаем на Hiding button")
     def click_on_hiding_button(self):
