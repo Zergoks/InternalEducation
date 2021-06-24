@@ -15,7 +15,7 @@ from webdriver_manager.firefox import GeckoDriverManager
 
 from Core.utils import list_of_random_strings
 
-PATH_TO_GECKODRIVER = "Core/drivers/geckodriver.exe"
+PATH_TO_GECKODRIVER = "../Core/drivers/geckodriver.exe"
 AMOUNT_RANDOM_STRINGS = 3
 
 string_generator = list_of_random_strings(AMOUNT_RANDOM_STRINGS)
@@ -94,7 +94,7 @@ def create_local_driver(config):
         driver_manager = GeckoDriverManager("82.0")
         options = get_firefox_options(config)
         driver = webdriver.Firefox(
-            executable_path="Core/drivers/geckodriver.exe",
+            executable_path="../Core/drivers/geckodriver.exe",
             options=options,
         )
     return driver
