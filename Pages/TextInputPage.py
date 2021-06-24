@@ -1,5 +1,6 @@
 import allure
 from selenium.webdriver.common.by import By
+
 from Pages.BasePage import BasePage
 
 
@@ -9,8 +10,8 @@ class TextInput(BasePage):
 
     def __init__(self, driver):
         super().__init__(driver)
-        self.url = '/click'
-        self.title = 'Click'
+        self.url = "/click"
+        self.title = "Click"
 
     @allure.step("Нажимаем на Updating button")
     def click_on_updating_button(self):

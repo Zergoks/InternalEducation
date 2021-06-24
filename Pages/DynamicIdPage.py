@@ -1,7 +1,7 @@
 import allure
+from selenium.webdriver.common.by import By
 
 from Pages.BasePage import BasePage
-from selenium.webdriver.common.by import By
 
 
 class DynamicIdPage(BasePage):
@@ -9,8 +9,8 @@ class DynamicIdPage(BasePage):
 
     def __init__(self, driver):
         super().__init__(driver)
-        self.url = '/dynamicid'
-        self.title = 'Dynamic ID'
+        self.url = "/dynamicid"
+        self.title = "Dynamic ID"
 
     @allure.step("Получаем значение аттрибута у dynamic_id_button")
     def get_attribute_of_dynamic_id_button(self, attribute) -> str:

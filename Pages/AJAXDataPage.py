@@ -1,7 +1,7 @@
 import allure
+from selenium.webdriver.common.by import By
 
 from Pages.BasePage import BasePage
-from selenium.webdriver.common.by import By
 
 
 class AJAXDataPage(BasePage):
@@ -10,8 +10,8 @@ class AJAXDataPage(BasePage):
 
     def __init__(self, driver):
         super().__init__(driver)
-        self.url = '/ajax'
-        self.title = 'AJAX Data'
+        self.url = "/ajax"
+        self.title = "AJAX Data"
 
     @allure.step("Нажимаем на Triggering AJAX button")
     def click_on_triggering_ajax_button(self):

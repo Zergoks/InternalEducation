@@ -1,12 +1,8 @@
-from time import sleep
-
 import allure
-import pytest
-
-from Pages.HomePage import HomePage
-from Pages.HiddenLayersPage import HiddenLayerPage
 
 from Core.utils import explicit_sleep as sleep
+from Pages.HiddenLayersPage import HiddenLayerPage
+from Pages.HomePage import HomePage
 
 
 class TestHiddenLayersPage:
@@ -23,4 +19,7 @@ class TestHiddenLayersPage:
         sleep(1)
         hidden_layer_page.click_on_green_button()
         with allure.step("Проверям, что зеленая кнопка после нажатия не видна на UI"):
-            assert hidden_layer_page.is_element_visible(hidden_layer_page.greenButton) is True, 'Visible'
+            assert (
+                hidden_layer_page.is_element_visible(hidden_layer_page.greenButton)
+                is True
+            ), "Visible"
