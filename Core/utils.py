@@ -17,10 +17,3 @@ def list_of_random_strings(amount_of_strings: int) -> list:
             "".join(random.choice(letters) for i in range(random.randint(1, 100))),
         )
     return result
-
-
-def explicit_sleep(time=1):
-    """Used as reference for issue with waiting for element to be clickable.
-    Look at github:
-    Having time. sleep() for debugging in the merged project code - not good practice #11"""
-    sleep(time)

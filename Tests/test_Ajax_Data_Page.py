@@ -1,11 +1,12 @@
 import allure
+import pytest
 
-from Core.utils import explicit_sleep as sleep
 from Pages.AJAXDataPage import AJAXDataPage
 from Pages.HomePage import HomePage
 
 
 @allure.suite("AJAX Data Page UI")
+@pytest.mark.test
 class TestAJAXDataPage:
     @allure.title("После успешного выполнения ajax запроса появляется нотификация")
     def test_ajax_success_notification_is_visible(self, driver):
@@ -13,7 +14,6 @@ class TestAJAXDataPage:
         ajax_data_page = AJAXDataPage(driver)
         home_page.go_to_home_page()
         home_page.go_to_ajax_data_page()
-        sleep(1)
         ajax_data_page.click_on_triggering_ajax_button()
         with allure.step(
             "Проверям, что в течение 30 появляется нотификация успехом запроса",

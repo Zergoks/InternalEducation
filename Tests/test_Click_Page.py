@@ -1,7 +1,5 @@
 import allure
-import pytest
 
-from Core.utils import explicit_sleep as sleep
 from Pages.ClickPage import ClickPage
 from Pages.HomePage import HomePage
 
@@ -14,7 +12,6 @@ class TestClickPage:
         click_page = ClickPage(driver)
         home_page.go_to_home_page()
         home_page.go_to_click_page()
-        sleep(1)
         click_page.click_on_bad_button()
         with allure.step(
             "Проверям, что после нажатия на bad button появился success button",

@@ -1,7 +1,5 @@
 import allure
-import pytest
 
-from Core.utils import explicit_sleep as sleep
 from Pages.HomePage import HomePage
 from Pages.TextInputPage import TextInput
 
@@ -16,7 +14,6 @@ class TestTextInputPage:
         text_input_page = TextInput(driver)
         home_page.go_to_home_page()
         home_page.go_to_text_input_page()
-        sleep(1)
         text_input_page.send_keys_to(
             generated_mix_string,
             text_input_page.TextInputField,
