@@ -1,7 +1,5 @@
 import allure
-import pytest
 
-from Core.utils import explicit_sleep as sleep
 from Pages.ClientSideDelayPage import ClientSideDelay
 from Pages.HomePage import HomePage
 
@@ -16,7 +14,6 @@ class TestClientSideDelayPage:
         client_delay_page = ClientSideDelay(driver)
         home_page.go_to_home_page()
         home_page.go_to_client_side_delay_page()
-        sleep(1)
         client_delay_page.click_on_triggering_client_side_logic_button()
         with allure.step(
             "Проверям, что за 30 секунд появляется нотификация успехом запроса",
