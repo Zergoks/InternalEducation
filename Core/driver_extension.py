@@ -126,7 +126,6 @@ class DriverExtension:
                     ),
                 ),
             )
-
             logger.info(
                 f"Element {locator} appeared on the web page. locatorType {by_type}",
             )
@@ -135,6 +134,21 @@ class DriverExtension:
                 f"Element {locator} not appeared on the web page. LocatorType {by_type}",
             )
         return element
+
+    def wait_until_page_is_fully_loaded(self, timeout: Union[int, float] = 10) -> bool:
+        try:
+            logger.info(
+                f"Waiting for maximum: {timeout} seconds for complete loading of the page"
+            )
+            WebDriverWait(self.driver, timeout,).until(
+                lambda driver: self.driver.execute_script("return document.readyState")
+                == "complete"
+            )
+            logger.info("The page is fully loaded")
+        except TimeoutException:
+            logger.info("Page state is not complete")
+            return False
+        return True
 
     def scroll_into_view(self, locator_model: tuple):
         try:
@@ -148,6 +162,7 @@ class DriverExtension:
 
     def click_on_element(self, locator_model: tuple) -> None:
         element = self.wait_for_element_to_be_clickable(locator_model)
+        self.wait_until_page_is_fully_loaded()
         element.click()
         logger.info(f"Clicked on element with locator_model: {locator_model}")
 
