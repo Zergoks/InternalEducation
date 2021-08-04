@@ -46,6 +46,19 @@ Example of common usage:
 pytest -n 3 --browser=firefox --headless=True
 ```
 
+### Local Test Run in Docker container
+
+Build new image:
+
+```docker build -t pytest_local_chrome -f Dockerfile_chrome .```
+
+Run container:
+
+```docker run pytest_local_chrome [Options]```
+
+Options for run described above. NOTE: only now only *chrome* installed in container
+Do not forget to mount *volume* in result export is needed `--volume allure-results:Path/To/Dir/With/Result/Storage`
+
 
 ### Results
 Tool for gathering and processing results of tests: `Allure`
