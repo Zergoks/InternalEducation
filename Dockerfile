@@ -7,7 +7,7 @@ FROM python:3.9.5-buster
 #RUN echo 'nameserver 8.8.8.8'>/etc/resolv.conf
 #RUN ping pypi.org -n 10
 
-RUN mkdir -p /user/src/app/
+RUN mkdir -p /user/src/app/allure-report/
 WORKDIR /usr/src/app/
 
 COPY requirements.txt ./
@@ -16,4 +16,5 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 COPY . .
 
-CMD ["pytest", "-m test"]
+CMD ["tail", "-f", "/dev/null"]
+

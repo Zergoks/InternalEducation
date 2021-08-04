@@ -9,6 +9,7 @@ from Pages.HomePage import HomePage
 @pytest.mark.test
 class TestAJAXDataPage:
     @allure.title("После успешного выполнения ajax запроса появляется нотификация")
+    @pytest.mark.smoke
     def test_ajax_success_notification_is_visible(self, driver):
         home_page = HomePage(driver)
         ajax_data_page = AJAXDataPage(driver)

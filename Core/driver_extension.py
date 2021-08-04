@@ -187,11 +187,11 @@ class DriverExtension:
 
     def is_element_visible(self, locator_model: tuple, timeout=10):
         element = self.get_element(locator_model, timeout)
-        if element.is_displayed():
-            logger.info(f"Element with locator_model {locator_model} is visible")
-        else:
+        if element is None or element.is_displayed() is False:
             logger.info(f"Element with locator_model {locator_model} is not visible")
-        return element.is_displayed()
+            return False
+        logger.info(f"Element with locator_model {locator_model} is visible")
+        return True
 
     def is_alert_present(self, timeout=10) -> bool:
         wait = WebDriverWait(self.driver, timeout)

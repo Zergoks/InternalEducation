@@ -1,9 +1,15 @@
-
-# To execute this docker-compose yml file use `docker-compose -f docker-compose.yml up`
+#first of all created network 'docker network create grid'
+# To execute this docker-compose yml file use `docker-compose -f docker-compose-v2.yml up`
 # Add the `-d` flag at the end for detached execution
 # To stop the execution, hit Ctrl+C, and then `docker-compose -f docker-compose.yml down`
 version: '2'
 services:
+  python:
+    build: ./
+    container_name: python-cont
+    volumes:
+      - /var/jenkins_home/allure-report:/usr/src/app/allure-report/
+
   chrome:
     image: selenium/node-chrome:4.0.0-beta-4-20210608
     volumes:
@@ -45,6 +51,8 @@ services:
 
   selenium-hub:
     image: selenium/hub:4.0.0-beta-4-20210608
+    depends_on:
+      - python
     ports:
       - "4442:4442"
       - "4443:4443"
