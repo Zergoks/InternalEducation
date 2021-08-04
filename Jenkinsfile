@@ -12,7 +12,7 @@ pipeline {
         }
         stage('run tests') {
             steps {
-                sh 'docker exec python-cont pytest -n 3 -m test --reruns 5 --remote=True --hub=selenium-hub --browser=ff --alluredir=/allure-report'
+                sh 'docker exec python-cont pytest -n 3 -m test --reruns 5 --remote=True --hub=selenium-hub --browser=ff --alluredir=/usr/src/app/allure-report/'
                 //sh 'docker exec python-cont pytest -m smoke --remote=True --hub=selenium-hub --browser=edge --alluredir=/allure-report'
 			}
 		}
