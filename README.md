@@ -56,8 +56,11 @@ Run container:
 
 ```docker run pytest_local_chrome [Options]```
 
-Options for run described above. NOTE: only now only *chrome* installed in container
+Options for run described above.
+
 Do not forget to mount *volume* in result export is needed `--volume allure-results:Path/To/Dir/With/Result/Storage`
+
+NOTE: now only *chrome* installed in container
 
 
 ### Results
