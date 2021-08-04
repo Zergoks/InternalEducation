@@ -65,6 +65,14 @@ def config(request):
 def get_chrome_options(config):
     options = ChromeOptions()
     options.headless = config["headless"]
+    options.add_argument("--no-sandbox")  # bypass OS security model
+    options.add_argument(
+        "--disable-dev-shm-usage",
+    )  # overcome limited resource problems
+    options.add_argument("--disable-gpu")
+    # options.add_argument("--start-maximized")  # open Browser in maximized mode
+    # options.add_experimental_option("excludeSwitches", ["enable-automation"])
+    # options.add_experimental_option('useAutomationExtension', False)
     return options
 
 
@@ -103,14 +111,6 @@ def create_local_driver(config):
 def create_remote_driver(config):
     if config["browser"] == "chrome":
         options = get_chrome_options(config)
-        options.add_argument("--no-sandbox")  # bypass OS security model
-        options.add_argument(
-            "--disable-dev-shm-usage",
-        )  # overcome limited resource problems
-        options.add_argument("--disable-gpu")
-        # options.add_argument("--start-maximized")  # open Browser in maximized mode
-        # options.add_experimental_option("excludeSwitches", ["enable-automation"])
-        # options.add_experimental_option('useAutomationExtension', False)
     elif config["browser"] == "firefox" or "ff":
         options = get_firefox_options(config)
     elif config["browser"] == "edge" or "MicrosoftEdge":
