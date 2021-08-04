@@ -12,7 +12,7 @@ pipeline {
         }
         stage('run tests') {
             steps {
-                sh 'docker exec python-cont pytest -n 3 -m test --reruns 5 --remote=True --hub=selenium-hub --browser=ff --alluredir=report/'
+                sh 'docker exec python-cont pytest -n 3 -m test --reruns 5 --remote=True --hub=selenium-hub --browser=ff --alluredir=target/allure-results'
                 //sh 'docker exec python-cont pytest -m smoke --remote=True --hub=selenium-hub --browser=edge --alluredir=/allure-report'
 			}
 		}
@@ -23,7 +23,7 @@ pipeline {
                             includeProperties: false,
                             jdk: '',
                             reportBuildPolicy: 'ALWAYS',
-                            results: [[path: 'report/']]
+                            results: [[path: 'target/allure-results']]
                             ])
                 sh 'docker network rm grid'
                 sh 'docker-compose down --remove-orphans'
