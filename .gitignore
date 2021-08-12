@@ -4,3 +4,4 @@
 /Reports/
 .idea
 venv
+__pycache__
